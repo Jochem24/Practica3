@@ -1,24 +1,22 @@
 public class ListProducts {
 	private int NumProducts;
 	private Product[] list;
-	private int identifier;
 	
 	
-	public ListProducts (int NumProducts, int identifier) {
-		list = new Product[NumProducts];
-		this.identifier = identifier;
+	public ListProducts (int size) {
+		list = new Product[size];
+		NumProducts = 0;
 	}
 	
-	/**
-	 * @return the numProducts
-	 */
+	
+	
+	
+
+	 
 	public int getNumProducts() {
 		return NumProducts;
 	}
-	
-	/**
-	 * @param numProducts the numProducts to set
-	 */
+
 	public void setNumProducts(int numProducts) {
 		NumProducts = numProducts;
 	}
@@ -26,9 +24,7 @@ public class ListProducts {
 
 
 
-	/**
-	 * @return the list
-	 */
+
 	public Product[] getList() {
 		return list;
 	}
@@ -36,37 +32,15 @@ public class ListProducts {
 
 
 
-	/**
-	 * @param list the list to set
-	 */
+	
 	public void setList(Product[] list) {
 		this.list = list;
 	}
 
 
-
-
-	/**
-	 * @return the identifier
-	 */
-	public int getIdentifier() {
-		return identifier;
-	}
-
-
-
-
-	/**
-	 * @param identifier the identifier to set
-	 */
-	public void setIdentifier(int identifier) {
-		this.identifier = identifier;
-	}
-
-
 	public String toString(){
 		int i=0;
-		String result=null;
+		String result = "";
 		
 		for(i=0;i<NumProducts;i++) {
 			result = result + list[i].toString();
@@ -83,87 +57,89 @@ public class ListProducts {
 				found = true;
 			}
 		}
-		return true;
+		return found;
 		
 	}
 	
 	
 	public void addProduct(Product p) {
-		
-		if(NumProducts<list.length) {
-			if(!ExistsProduct(p)) {
-				int pos=NumProducts -1;
-				list[pos+1]=p.copy();
-				NumProducts++;
+		boolean found = false;	
+		for(int i=0;i<NumProducts && !found;i++) {
+			if(list[i].equals(p)) {
+			found = true;
 			}
+		}
+
+		if(NumProducts<list.length && !found) {
+			list[NumProducts] = p.copy();
+			NumProducts++;
 		}
 	}
 	
 	
-	@SuppressWarnings("null")
-	public Product[] ShowListProducts() {
-		Product list1[] = null;
-		int i = 0;
-		
+	
+	
+	public void ShowListProducts() {
+		int i;
 		for (i=0;i<NumProducts;i++) {
-			list1[i]=list[i].copy();
+				System.out.println(list[i].toString());
 		}
-		
-		return list1;
 		
 	}
 	
 	
 	public Product SearchProduct(Product p) {
-		boolean found = false;
-		int i =0;
-		Product prod = null;
-		
-		for(i=0; i< NumProducts && !found; i++) {
-			if (list[i].equals(p)) {
-				prod = p;
-			}
-			
-		}
-		
-		return prod;
-	}
-	
-	@SuppressWarnings("null")
-	public Product[] SearchNameProduct(String name) {
-		Product[] prod = null;
 		int i=0;
-		boolean found =list[i].getNameProduct().equals(name);
+		boolean found=false;
+		Product x=null;
 		
-		for(i=0; i<NumProducts;i++) {
-			if(found) {
-				prod[i] = list[i].copy();
+		for(i=0;i<NumProducts && !found;i++) {
+			if(list[i].equals(p)) {
+				x = list[i];
 			}
 		}
+		if(!found) {
+			System.out.println("This Exercise is not stored in our files!");
+		}
+		
+		return x;
+	}
+	
+	
+	public Product[] SearchNameProduct(String s) {
+		int i=0, j=0;
+		Product[] prod= new Product[10];
+		
+		
+		for(i=0;i<NumProducts;i++) {
+				if (list[i].nameProduct==s) {
+					prod[j]=list[i].copy();
+					}
+				
+			}
 		return prod;
 	}
 	
 	
-	@SuppressWarnings("null")
 	public Product[] ShowProductsInStock() {
-		int i=0;
-		Product[] prod = null;
-		boolean available = list[i].getStockProduct()>=1;
+		int i=0, j=0;
+		Product[] prod = new Product[NumProducts];
 		
 		for (i=0;i<NumProducts;i++) {
-			if(available) {
-				prod[i]=list[i].copy();
+			if ((list[i].stockProduct) >= 1) {
+				prod[j] = list[i].copy();
+				j++;
 			}
 		}
 		
 		return prod;
 	}
 	
-	private double totalPrice;
+private double totalPrice;
 	
 	public double calculateTotalPrice() {
 		for(int i=0;i<NumProducts;i++) {
-			totalPrice =+ list[i].getPriceProduct();
+			totalPrice =+ list[i].priceProduct;
 		}
 		return(totalPrice);
 	}
@@ -182,7 +158,7 @@ public class ListProducts {
 			int y = x++;
 			list[i].setStockProduct(y);
 		}
-	}
 	
 	
+}
 }

@@ -1,11 +1,10 @@
-
 public class Software extends Product{
 	
 	private String NameOS;
 	
 
 	public Software(String nombre, double value, int available, String OS){
-		super(nombre, value);
+		super(nombre, value, available);
 		NameOS = OS;
 	}
 
@@ -29,6 +28,13 @@ public class Software extends Product{
 
 	@Override
 	public String toString() {
-		return (super.toString()+"NameOS=" + NameOS + "]");
+		return ("Software " +super.toString()+" NameOS=" + NameOS + "]");
 	}
+
+	
+	public Software copy() {
+		Software same = new Software(nameProduct, priceProduct, stockProduct, NameOS);
+		return same;
+	}
+
 }

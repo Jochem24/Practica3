@@ -1,17 +1,39 @@
+public abstract class Product {
 
-public class Product {
+	protected String nameProduct;
+	protected double priceProduct;
+	protected int stockProduct;
+	protected int identifier;
 	
-	private String nameProduct;
-	private double priceProduct;
-	private int stockProduct;
-	private int oldStock;
-		
-	public Product(String name, double price) {
-		nameProduct=name;
-		priceProduct=price;
-		stockProduct=0;
-		this.oldStock = 0;
+	public Product(String name, double price, int stock) {
+		nameProduct = name;
+		priceProduct = price;
+		stockProduct = stock;
+		identifier = 0;
 	}
+
+
+	
+
+	/**
+	 * @return the identifier
+	 */
+	public int getIdentifier() {
+		return identifier;
+	}
+
+
+
+
+	/**
+	 * @param identifier the identifier to set
+	 */
+	public void setIdentifier(int identifier) {
+		this.identifier = identifier;
+	}
+
+
+
 
 	public String getNameProduct() {
 		return nameProduct;
@@ -37,23 +59,22 @@ public class Product {
 		this.stockProduct = stockProduct;
 	}
 	
-	public int getOldStock() {
-		return oldStock;
-	}
-
-	public void setOldStock(int oldStock) {
-		this.oldStock = oldStock;
-	}
+	
 		
 	@Override
 	public String toString() {
-		return "Product [nameProduct=" + nameProduct + ", priceProduct=" + priceProduct + ", stockProduct=" + stockProduct + "]";
-	}
+
+		return " nameProduct=" + nameProduct + ", priceProduct=" + priceProduct + ", stockProduct="
+				+ stockProduct +"," ;
+
 		
-	public Product copy() {
-		Product same = new Product(nameProduct, priceProduct);
-		return(same);
 	}
+
+	
+	public abstract Product copy();
+
+
+		
+	
 		
 }
-

@@ -1,10 +1,6 @@
-
 public class Hardware extends Product{
 	
 	HardwareType Type;
-	 
-	
-	
 
 	/**
 	 * @return the type
@@ -23,11 +19,18 @@ public class Hardware extends Product{
 	
 
 	public Hardware(String nombre, double value, int available, HardwareType tipo) {
-		super(nombre, value);
+		super(nombre, value, available);
 		Type = tipo;
 	}
+	
+	@Override
 	public String toString() {
-		return (super.toString()+"Type = "+ Type);
+		return ("Hardware " +super.toString()+" Type = "+ Type);
+	}
+	
+	@Override
+	public Hardware copy() {
+		Hardware same = new Hardware(nameProduct, priceProduct, stockProduct, Type);
+		return same;
 	}
 }
-
