@@ -48,12 +48,12 @@ public class ListOrders {
 	 * @return A list of all orders the customer has made.
 	 */
 	
-	public Order[] searchOrders(int clientID) {
-		Order[] list = null;
+	public ListOrders searchOrders(int clientID) {
+		ListOrders list = new ListOrders(20);
 		int j=0;
 		for(int i=0;i<numOfOrders;i++) {
 			if(listOfOrders[i].getClientID() == clientID){
-				list[j] = list[i].copy();
+				list.addOrder(listOfOrders[i]);
 				j++;
 			}
 		}

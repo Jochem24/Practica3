@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Main {
+public class Main{
 	
 	static Scanner keyboard=new Scanner(System.in);
 
@@ -47,33 +47,6 @@ public class Main {
 	
 	//=========================================================================================================
 	
-	public static void caseMenuStart(int op) {
-		while (op!=4) {
-			switch(op) {
-			case 1: showMenuProducts(); break;
-			case 2: showMenuClients(); break;
-			case 3: showMenuOrders(); break;
-			}
-			op = Integer.parseInt(keyboard.nextLine());
-			showMenuStart();
-		}
-	}
-	//=========================================================================================================
-	
-	public static void caseMenuProduct(int op, ListProducts product) {
-		op = Integer.parseInt(keyboard.nextLine());
-		while(op!=8) {
-			switch(op) {
-			case 1: manageDataAddProduct(product); break;
-			case 2: manageDataDeleteProduct(product); break;
-			case 3: manageDataAddComputerPack(product); break;
-			case 4: manageDataShowStock(product); break;
-			case 5: manageDataChangeStock(product); break;
-			case 6: manageDataShowProductsComputerPack(product); break;
-			case 7: manageDataShowCatalogue(product); break;
-			}
-		}
-	}
 	
 	public static void manageDataAddProduct(ListProducts product) {
 		
@@ -105,17 +78,6 @@ public class Main {
 	
 	//=========================================================================================================
 	
-	public static void caseMenuClient(int op, ListClient clientList, ListOrders ordersList) {
-		op = Integer.parseInt(keyboard.nextLine());
-		while(op!=4) {
-			switch(op) {
-			case 1: manageDataAddClient(clientList); break;
-			case 2: manageDataDeleteClient(clientList); break;
-			case 3: manageDataShowAllClients(clientList); break;
-			}
-		}
-	}
-	
 	public static void manageDataAddClient(ListClient clientList) {
 		int ID; String email, postalAddress;
 		System.out.println("\n\n\tEnter the ID of the client:\t");
@@ -126,6 +88,7 @@ public class Main {
 		postalAddress = keyboard.nextLine();
 		Client c = new Client(ID, email, postalAddress);
 		clientList.addClient(c);
+		System.out.println("\n\n\tClient succesfully added");
 	}
 	
 	public static void manageDataDeleteClient(ListClient clientList) {
@@ -142,18 +105,6 @@ public class Main {
 	}
 	
 	//=========================================================================================================
-
-	public static void caseMenuOrders(int op, ListOrders order) {
-		op = Integer.parseInt(keyboard.nextLine());
-		while(op!=4) {
-			switch(op) {
-			case 1: manageDataProductsOrder(order); break;
-			case 2: manageDataCompareOrdersProducts(order); break;
-			case 3: manageDataShowAllOrders(order); break;
-			}
-		}
-	}
-	
 	public static void manageDataProductsOrder(ListOrders order) {
 		
 	}
@@ -170,19 +121,19 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		ListProducts product = new ListProducts(20,1);
+		ListProducts product = new ListProducts(20);
 		ListClient client = new ListClient(20);
 		ListOrders order = new ListOrders(20);
 		
-		
+		int op, op2;
 		showMenuStart();
-		int op = Integer.parseInt(keyboard.nextLine());
+		op = Integer.parseInt(keyboard.nextLine());
 		while (op!=4) {
 			switch(op) {
 			case 1: showMenuProducts(); 
-					op = Integer.parseInt(keyboard.nextLine());
-					while(op!=8) {
-						switch(op) {
+					op2 = Integer.parseInt(keyboard.nextLine());
+					while(op2!=8) {
+						switch(op2) {
 						case 1: manageDataAddProduct(product); break;
 						case 2: manageDataDeleteProduct(product); break;
 						case 3: manageDataAddComputerPack(product); break;
@@ -191,38 +142,35 @@ public class Main {
 						case 6: manageDataShowProductsComputerPack(product); break;
 						case 7: manageDataShowCatalogue(product); break;
 						}
-						//showMenuStart();
-						//caseMenuStart(op);
+						break;
 					}
+					break;
 			
 			case 2: showMenuClients(); 
-					op = Integer.parseInt(keyboard.nextLine());
-					while(op!=4) {
-						switch(op) {
+					op2 = Integer.parseInt(keyboard.nextLine());
+					while(op2!=4) {
+						switch(op2) {
 						case 1: manageDataAddClient(client); break;
 						case 2: manageDataDeleteClient(client); break;
 						case 3: manageDataShowAllClients(client); break;
 						}	
-						//showMenuStart();
-						//caseMenuStart(op);
+						break;
 					}
-			
+					break;
 			case 3: showMenuOrders();
-					op = Integer.parseInt(keyboard.nextLine());
-					while(op!=4) {
-						switch(op) {
+					op2 = Integer.parseInt(keyboard.nextLine());
+					while(op2!=4) {
+						switch(op2) {
 						case 1: manageDataProductsOrder(order); break;
 						case 2: manageDataCompareOrdersProducts(order); break;
 						case 3: manageDataShowAllOrders(order); break;
 						}
-						//showMenuStart();
-						//caseMenuStart(op);
+						break;
 					}
+					break;
 			}
-			op = Integer.parseInt(keyboard.nextLine());
 			showMenuStart();
+			op = Integer.parseInt(keyboard.nextLine());
 		}
 	}
-		
-	
 }

@@ -20,7 +20,7 @@ public class Order {
 		this.clientID = client.getID();
 		this.orderID = String.valueOf(clientID) + String.valueOf(num);
 		num++;
-		ListProducts list = new ListProducts(20,1);;
+		ListProducts list = new ListProducts(20);;
 		totalPrice = 0;
 		this.date = null; //configure the date in main file using java.time.LocalDate
 	}
