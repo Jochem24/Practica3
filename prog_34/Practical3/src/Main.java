@@ -4,12 +4,21 @@ public class Main{
 	
 	static Scanner keyboard=new Scanner(System.in);
 
+	
 	public static void showMenuStart() {
+		System.out.println("\n\n Options:");
+		System.out.println("\n\t1.   Owner");
+		System.out.println("\t2.   Client");
+		System.out.println("\t3.   Close the system");
+		System.out.print("\n\tChoose an option:\n");
+	}
+	
+	public static void showMenuOwner() {
 		System.out.println("\n\n Options:");
 		System.out.println("\n\t1.   Manage products");
 		System.out.println("\t2.   Manage clients");
 		System.out.println("\t3.   Manage orders");
-		System.out.println("\t4.   Close the system");
+		System.out.println("\t4.   Return to the start screen");
 		System.out.print("\n\tChoose an option:\n");
 	}
 	
@@ -22,7 +31,7 @@ public class Main{
 		System.out.println("\t5.   Change available stock of a product");
 		System.out.println("\t6.   Show all products which are part of any computer packs");
 		System.out.println("\t7.   Show the product catalogue");
-		System.out.println("\t8.   Return to the start menu");
+		System.out.println("\t8.   Return to the owner menu");
 		System.out.print("\n\tChoose an option:\n");
 	}
 	
@@ -31,7 +40,7 @@ public class Main{
 		System.out.println("\n\t1.   Add a client");
 		System.out.println("\t2.   Remove a client");
 		System.out.println("\t3.   Show all the clients in the system");
-		System.out.println("\t4.   Return to the start menu");
+		System.out.println("\t4.   Return to the owner menu");
 		System.out.print("\n\t\t\tChoose an option:\n");
 	}
 
@@ -40,7 +49,7 @@ public class Main{
 		System.out.println("\n\t1.   Show the products which appear in any order");
 		System.out.println("\t2.   Compare amount of orders of 2 products");
 		System.out.println("\t3.   Show all the orders in the system");
-		System.out.println("\t4.   Return to the start menu");
+		System.out.println("\t4.   Return to the owner menu");
 		System.out.print("\n\t\t\tChoose an option:\n");
 		
 	}
@@ -119,22 +128,15 @@ public class Main{
 	}
 	
 	//=========================================================================================================
-	
-	public static void main(String[] args) {
-		
-		ListProducts product = new ListProducts(20);
-		ListClient client = new ListClient(20);
-		ListOrders order = new ListOrders(20);
-		
-		int op, op2;
-		showMenuStart();
+	public static void menuOwner(int op, ListProducts product, ListClient client, ListOrders order) {
+		showMenuOwner();
 		op = Integer.parseInt(keyboard.nextLine());
 		while (op!=4) {
 			switch(op) {
 			case 1: showMenuProducts(); 
-					op2 = Integer.parseInt(keyboard.nextLine());
-					while(op2!=8) {
-						switch(op2) {
+					op = Integer.parseInt(keyboard.nextLine());
+					while(op!=8) {
+						switch(op) {
 						case 1: manageDataAddProduct(product); break;
 						case 2: manageDataDeleteProduct(product); break;
 						case 3: manageDataAddComputerPack(product); break;
@@ -148,9 +150,9 @@ public class Main{
 					break;
 			
 			case 2: showMenuClients(); 
-					op2 = Integer.parseInt(keyboard.nextLine());
-					while(op2!=4) {
-						switch(op2) {
+					op = Integer.parseInt(keyboard.nextLine());
+					while(op!=4) {
+						switch(op) {
 						case 1: manageDataAddClient(client); break;
 						case 2: manageDataDeleteClient(client); break;
 						case 3: manageDataShowAllClients(client); break;
@@ -159,9 +161,9 @@ public class Main{
 					}
 					break;
 			case 3: showMenuOrders();
-					op2 = Integer.parseInt(keyboard.nextLine());
-					while(op2!=4) {
-						switch(op2) {
+					op = Integer.parseInt(keyboard.nextLine());
+					while(op!=4) {
+						switch(op) {
 						case 1: manageDataProductsOrder(order); break;
 						case 2: manageDataCompareOrdersProducts(order); break;
 						case 3: manageDataShowAllOrders(order); break;
@@ -170,8 +172,34 @@ public class Main{
 					}
 					break;
 			}
-			showMenuStart();
-			op = Integer.parseInt(keyboard.nextLine());
+		showMenuOwner();
+		op = Integer.parseInt(keyboard.nextLine());
 		}
+	}
+	
+	public static void menuClient() {
+		
+	}
+	//=========================================================================================================
+	
+	public static void main(String[] args) {
+		
+		ListProducts product = new ListProducts(20);
+		ListClient client = new ListClient(20);
+		ListOrders order = new ListOrders(20);
+		
+		int op;
+		
+		
+		showMenuStart();
+		op = Integer.parseInt(keyboard.nextLine());
+		while(op!=3) {
+			switch(op) {
+			case 1: menuOwner(op, product, client, order); break;		
+			case 2: menuClient(); break;
+			}
+		showMenuStart();
+		op = Integer.parseInt(keyboard.nextLine());	
+		}		
 	}
 }
