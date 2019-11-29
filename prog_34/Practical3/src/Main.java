@@ -97,6 +97,7 @@ public class Main{
 		ID = keyboard.nextInt();
 		Client c = clientList.searchClient(ID);
 		clientList.deleteClient(c);
+		
 	}
 		// still have to delete all the orders
 	

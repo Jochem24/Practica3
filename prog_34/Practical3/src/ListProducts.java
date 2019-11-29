@@ -8,11 +8,6 @@ public class ListProducts {
 		NumProducts = 0;
 	}
 	
-	
-	
-	
-
-	 
 	public int getNumProducts() {
 		return NumProducts;
 	}
@@ -20,23 +15,14 @@ public class ListProducts {
 	public void setNumProducts(int numProducts) {
 		NumProducts = numProducts;
 	}
-
-
-
-
-
+	
 	public Product[] getList() {
 		return list;
 	}
 
-
-
-
-	
 	public void setList(Product[] list) {
 		this.list = list;
 	}
-
 
 	public String toString(){
 		int i=0;
@@ -61,7 +47,6 @@ public class ListProducts {
 		
 	}
 	
-	
 	public void addProduct(Product p) {
 		boolean found = false;	
 		for(int i=0;i<NumProducts && !found;i++) {
@@ -76,9 +61,6 @@ public class ListProducts {
 		}
 	}
 	
-	
-	
-	
 	public void ShowListProducts() {
 		int i;
 		for (i=0;i<NumProducts;i++) {
@@ -86,7 +68,6 @@ public class ListProducts {
 		}
 		
 	}
-	
 	
 	public Product SearchProduct(Product p) {
 		int i=0;
@@ -105,17 +86,14 @@ public class ListProducts {
 		return x;
 	}
 	
-	
 	public Product[] SearchNameProduct(String s) {
 		int i=0, j=0;
 		Product[] prod= new Product[10];
 		
-		
 		for(i=0;i<NumProducts;i++) {
 				if (list[i].nameProduct==s) {
 					prod[j]=list[i].copy();
-					}
-				
+					}	
 			}
 		return prod;
 	}
@@ -134,16 +112,22 @@ public class ListProducts {
 		
 		return prod;
 	}
+//===========================================================================================
+	private double totalPrice;
 	
-private double totalPrice;
-	
+	/**
+	 * 
+	 */
 	public double calculateTotalPrice() {
-		for(int i=0;i<NumProducts;i++) {
-			totalPrice =+ list[i].priceProduct;
+		for(int i=0;i<NumProducts && list[i]!=null;i++) {
+			totalPrice += list[i].priceProduct;
 		}
 		return(totalPrice);
 	}
-	
+
+	/**
+	 * 
+	 */
 	public void lowerStock() {
 		for(int i=0; i<NumProducts; i++) {
 			int x = list[i].getStockProduct();

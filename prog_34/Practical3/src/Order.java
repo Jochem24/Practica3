@@ -1,7 +1,6 @@
 
 public class Order {
 	
-	private Client client;
 	private int clientID;
 	private String orderID;
 	private int num;
@@ -16,16 +15,20 @@ public class Order {
 	 * @param quantity
 	 * @param date
 	 */
-	public Order(Client client) {
-		this.clientID = client.getID();
+	public Order(int clientID,String date) {
+		this.clientID = clientID;
+		num = getRandomNum();
 		this.orderID = String.valueOf(clientID) + String.valueOf(num);
-		num++;
-		ListProducts list = new ListProducts(20);;
-		totalPrice = 0;
-		this.date = null; //configure the date in main file using java.time.LocalDate
+		listProducts = new ListProducts(20);
+		this.totalPrice = 0;
+		this.date = date; //configure the date in main file using java.time.LocalDate
+	}
+
+	public int getRandomNum(){
+	    int num = (int)(Math.random()*(999-0)+1);
+	    return (num);
 	}
 	
-
 	/**
 	 * 
 	 * @return
@@ -134,13 +137,14 @@ public class Order {
 		return "Order [clientID=" + clientID + ", orderID=" + orderID + ", num=" + num + ", listProducts="
 				+ listProducts + ", totalPrice=" + totalPrice + ", date=" + date + "]";
 	}
-
+	
 	/**
 	 * 
 	 * @return
 	 */
 	public Order copy(){
-		Order clone = new Order(client);
+		Order clone = new Order(clientID,date);
 		return(clone);
 	}
-}
+}	
+

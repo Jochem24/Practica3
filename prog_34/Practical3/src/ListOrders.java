@@ -18,23 +18,32 @@ public class ListOrders {
 	 * @param client
 	 * @param product
 	 */
-	public void addOrder(Order order){
-		if(numOfOrders<listOfOrders.length) {
-			listOfOrders[numOfOrders] = order.copy();
-			numOfOrders++;
+	public int getNumOfOrders() {
+		return(numOfOrders);
+	}
+	
+	public void showListOrders() {
+		for(int i=0;i<numOfOrders;i++) {
+			System.out.println(listOfOrders[i].toString());
 		}
 	}
 	
+	public void addOrder(Order order){
+		if(numOfOrders<listOfOrders.length) {
+			listOfOrders[numOfOrders] = order;
+			numOfOrders++;
+		}
+	}
+
 	/**
 	 * Delete an order of the list and restore the stock.
 	 * @param orderID The ID of the order to find the order in the list.
 	 * @param listProducts 
 	 */
-	public void deleteOrder(String orderID, Order order) {
+	public void deleteOrder(String orderID) {
 		boolean found = false;
 		for(int i=0;i<numOfOrders && !found;i++) {
 			if(listOfOrders[i].getOrderID().equals(orderID)) {
-				order.getListProducts().restoreStock();
 				listOfOrders[i]=null;
 				found=true;
 			}		
@@ -60,12 +69,12 @@ public class ListOrders {
 		return(list);	
 	}
 	
-	public String[] searchOrderID(int clientID) {
-		String[] list = null;
+	public ListOrders searchOrderID(int clientID) {
+		ListOrders list = new ListOrders(20);
 		int j=0;
 		for(int i=0;i<numOfOrders;i++) {
 			if(listOfOrders[i].getClientID() == clientID){
-				list[j] = listOfOrders[i].getOrderID();
+				list.addOrder(listOfOrders[i]);
 				j++;
 			}
 		}
