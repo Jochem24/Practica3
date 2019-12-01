@@ -86,6 +86,25 @@ public class ListProducts {
 		return x;
 	}
 	
+	public Product SearchProduct(String p) {
+		int i=0;
+		boolean found=false;
+		Product x=null;
+		
+		for(i=0;i<NumProducts && !found;i++) {
+			if(list[i].getNameProduct().equals(p)) {
+				x = list[i];
+			}
+		}
+		if(!found) {
+			System.out.println("This Exercise is not stored in our files!");
+		}
+		
+		return x;
+	}
+	
+	
+	
 	public Product[] SearchNameProduct(String s) {
 		int i=0, j=0;
 		Product[] prod= new Product[10];
@@ -124,25 +143,29 @@ public class ListProducts {
 		}
 		return(totalPrice);
 	}
-
+	
+	
 	/**
 	 * 
 	 */
-	public void lowerStock() {
+
+	
+	public void changeStock(Product product, int quantity) {
 		for(int i=0; i<NumProducts; i++) {
-			int x = list[i].getStockProduct();
-			int y= x--;
-			list[i].setStockProduct(y);
+			if(list[i].getNameProduct().equals(product.getNameProduct())) {
+				list[i].setStockProduct(list[i].changeStock(quantity));
+			}
 		}
 	}
 	
-	public void restoreStock() {
+	public int amountProductInList(Product product) {
+		int counter = 0;
 		for(int i=0; i<NumProducts; i++) {
-			int x = list[i].getStockProduct();
-			int y = x++;
-			list[i].setStockProduct(y);
+			if(list[i].getIdentifier() == product.getIdentifier()) {
+				counter++;
+			}
 		}
-	
-	
+		return(counter);
+	}
 }
-}
+

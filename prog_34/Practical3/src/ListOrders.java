@@ -22,11 +22,18 @@ public class ListOrders {
 		return(numOfOrders);
 	}
 	
-	public void showListOrders() {
-		for(int i=0;i<numOfOrders;i++) {
-			System.out.println(listOfOrders[i].toString());
+	/**
+	 * 
+	 * @param i
+	 * @return
+	 */
+	public Order copy(int i) {
+		if(i<numOfOrders && listOfOrders[i]!=null) {
+			return(listOfOrders[i].copy());
 		}
+		return(null);
 	}
+	
 	
 	public void addOrder(Order order){
 		if(numOfOrders<listOfOrders.length) {
@@ -59,25 +66,47 @@ public class ListOrders {
 	
 	public ListOrders searchOrders(int clientID) {
 		ListOrders list = new ListOrders(20);
-		int j=0;
 		for(int i=0;i<numOfOrders;i++) {
 			if(listOfOrders[i].getClientID() == clientID){
 				list.addOrder(listOfOrders[i]);
-				j++;
 			}
 		}
 		return(list);	
 	}
 	
-	public ListOrders searchOrderID(int clientID) {
-		ListOrders list = new ListOrders(20);
+	/**
+	 * 
+	 * @param listProducts
+	 * @param listClient
+	 * @return
+	 */
+	
+	public String[] productsInOrder(ListProducts listProducts, ListClient listClient) {
+		Client client;
 		int j=0;
-		for(int i=0;i<numOfOrders;i++) {
-			if(listOfOrders[i].getClientID() == clientID){
-				list.addOrder(listOfOrders[i]);
-				j++;
+		String[] list = new String[20];
+		for(int i=0; i<numOfOrders; i++) {
+			client = listClient.searchClient(listOfOrders[i].getClientID());
+			list[j] = listOfOrders[i].getListProducts().toString() + client.toString();
+			j++;
+		}
+		return(list);
+	}
+	
+	/**
+	 * 
+	 * @param product1
+	 * @param product2
+	 * @return
+	 */
+	public Product amountProductInList(Product product1, Product product2) {
+		Product result = product1;;
+		for(int i=0; i<numOfOrders; i++) {
+			if(listOfOrders[i].getListProducts().amountProductInList(product1) < listOfOrders[i].getListProducts().amountProductInList(product1)) {
+				result = product2;
 			}
 		}
-		return(list);	
+		return(result);
 	}
+	
 }

@@ -106,26 +106,38 @@ public class Main{
 		ID = keyboard.nextInt();
 		Client c = clientList.searchClient(ID);
 		clientList.deleteClient(c);
-		
 	}
 		// still have to delete all the orders
 	
-	public static void manageDataShowAllClients(ListClient clientList) {
-		
-	}
+	public static void manageDataShowAllClients(ListClient client) {
+		for(int i=0;i<client.getNumOfClients();i++) {	
+			System.out.println(client.copy(i));
+			}
+		}
 	
 	//=========================================================================================================
-	public static void manageDataProductsOrder(ListOrders order) {
-		
+	public static void manageDataProductsOrder(ListOrders order, ListProducts product, ListClient client) {
+	order.productsInOrder(product, client);	
 	}
 	
-	public static void manageDataCompareOrdersProducts(ListOrders order) {
-		
+	public static void manageDataCompareOrdersProducts(ListOrders order, ListProducts product) {
+	System.out.println("n\n\tEnter the name of the first product:\t");
+	String product1 = keyboard.nextLine();
+	System.out.println("n\n\tEnter the name of the second product:\t");
+	String product2 = keyboard.nextLine();
+	
+	Product x = product.SearchProduct(product1);
+	Product y = product.SearchProduct(product2);
+	
+	System.out.println(order.amountProductInList(x,y));
 	}
 	
 	public static void manageDataShowAllOrders(ListOrders order) {
-		
+		for(int i=0;i<order.getNumOfOrders();i++) {	
+			System.out.println(order.copy(i));
+		}
 	}
+	
 	
 	//=========================================================================================================
 	public static void menuOwner(int op, ListProducts product, ListClient client, ListOrders order) {
@@ -164,8 +176,8 @@ public class Main{
 					op = Integer.parseInt(keyboard.nextLine());
 					while(op!=4) {
 						switch(op) {
-						case 1: manageDataProductsOrder(order); break;
-						case 2: manageDataCompareOrdersProducts(order); break;
+						case 1: manageDataProductsOrder(order, product, client); break;
+						case 2: manageDataCompareOrdersProducts(order, product); break;
 						case 3: manageDataShowAllOrders(order); break;
 						}
 						break;
@@ -185,11 +197,10 @@ public class Main{
 	public static void main(String[] args) {
 		
 		ListProducts product = new ListProducts(20);
-		ListClient client = new ListClient(20);
+		ListClient client = new ListClient();
 		ListOrders order = new ListOrders(20);
 		
 		int op;
-		
 		
 		showMenuStart();
 		op = Integer.parseInt(keyboard.nextLine());

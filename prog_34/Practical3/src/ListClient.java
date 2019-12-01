@@ -1,4 +1,3 @@
-import java.util.Arrays;
 
 public class ListClient {
 	
@@ -9,8 +8,8 @@ public class ListClient {
 	 * Create a new list of the type ListClient, indicate the size of the list in the arguments.
 	 * @param size The size of the list ListClient.
 	 */
-	public ListClient(int size) {
-		list = new Client[size];
+	public ListClient() {
+		list = new Client[99];
 	}
 	
 	/**
@@ -18,10 +17,30 @@ public class ListClient {
 	 * @return An integer value of numOfClients.
 	 */
 	public int getNumOfClients() {
-		return numOfClients;
+		return (numOfClients);
 	}
 	
-
+	/**
+	 * 
+	 * @return
+	 */
+	public ListClient copy() {
+		ListClient list = new ListClient();
+		return(list);
+	}
+	
+	/**
+	 * 
+	 * @param i
+	 * @return
+	 */
+	public Client copy(int i) {
+		if(i<numOfClients && list[i]!=null) {
+			return(list[i].copy());
+		}
+		return(null);
+	}
+	
 	/**
 	 * Adding a new client to the list if the ID is unique.
 	 * @param client The object Client added to the list ListClient.
@@ -52,6 +71,11 @@ public class ListClient {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param ID
+	 * @return
+	 */
 	public boolean checkClient(int ID) {
 		boolean found = false;
 		for(int i=0; i<numOfClients && !found; i++) {
@@ -62,6 +86,11 @@ public class ListClient {
 		return(found);
 	}
 	
+	/**
+	 * 
+	 * @param ID
+	 * @return
+	 */
 	public Client searchClient(int ID) {
 		int j=0;
 		boolean found = false;
@@ -72,11 +101,5 @@ public class ListClient {
 			}
 		}
 		return(list[j].copy());
-	}
-	
-	//only used to test the functionality of the list.
-	@Override
-	public String toString() {
-		return ("ListClient [list=" + Arrays.toString(list) + "]");
 	}
 }

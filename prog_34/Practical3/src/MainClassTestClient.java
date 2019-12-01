@@ -10,7 +10,7 @@ public class MainClassTestClient {
 		System.out.println(k);
 		System.out.println(l);
 		
-		ListClient test = new ListClient(10);
+		ListClient test = new ListClient();
 		
 		//Adding new clients to the list
 		test.addClient(j);
@@ -96,15 +96,12 @@ public class MainClassTestClient {
 		test1.setTotalPrice(test1.getListProducts().calculateTotalPrice());	//calculating the total price of the order and changing the value.
 		test2.setTotalPrice(test2.getListProducts().calculateTotalPrice());
 		
-		test1.getListProducts().lowerStock();
-		test2.getListProducts().lowerStock();
+		
 		
 		ListOrders list = new ListOrders(20); // create new list of orders
 		
 		list.addOrder(test1); // add orders to the list of orders
 		list.addOrder(test2);
-		
-		list.showListOrders(); // show the complete order
 }
 	
 }

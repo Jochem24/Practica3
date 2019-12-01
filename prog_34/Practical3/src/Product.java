@@ -73,7 +73,11 @@ public abstract class Product {
 	
 	public abstract Product copy();
 
-
+	public int changeStock(int quantity) {
+		int newStock = stockProduct -quantity;
+		stockProduct = newStock;
+		return(stockProduct);
+	}
 		
 	
 		
