@@ -90,7 +90,7 @@ public class MainClassTestClient {
 		test1.setListProducts(llist);	//assign lists of products to the order
 		test2.setListProducts(llist2);
 		
-		System.out.println(test1);	//test if adding list of products is succesfull
+		System.out.println(test1);	//test if adding list of products is successful
 		System.out.println(test2);
 		
 		test1.setTotalPrice(test1.getListProducts().calculateTotalPrice());	//calculating the total price of the order and changing the value.
@@ -102,6 +102,15 @@ public class MainClassTestClient {
 		
 		list.addOrder(test1); // add orders to the list of orders
 		list.addOrder(test2);
+		
+		test1.getListProducts().removeStock();
+		test2.getListProducts().removeStock();
+		
+		for (i=0;i<list.getNumOfOrders();i++) {   			
+			System.out.println(list.copy(i)); // the copy command does not work properly.
+		}
+		
+		
 }
 	
 }

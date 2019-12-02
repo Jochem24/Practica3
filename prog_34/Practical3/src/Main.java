@@ -100,18 +100,19 @@ public class Main{
 		System.out.println("\n\n\tClient succesfully added");
 	}
 	
-	public static void manageDataDeleteClient(ListClient clientList) {
+	public static void manageDataDeleteClient(ListClient client, ListOrders order) {
 		int ID;
 		System.out.println("n\n\tEnter the ID of the client you want to delete:\t");
 		ID = keyboard.nextInt();
-		Client c = clientList.searchClient(ID);
-		clientList.deleteClient(c);
+		Client c = client.searchClient(ID); //Find the object of the client based on the clientID of the person.
+		client.deleteClient(c); //Delete the client from the list of Clients.
+		order.searchOrders(ID).deleteOrder(ID); //Delete all the orders the client has made and restore the stock of the products.
+		
 	}
-		// still have to delete all the orders
-	
+
 	public static void manageDataShowAllClients(ListClient client) {
 		for(int i=0;i<client.getNumOfClients();i++) {	
-			System.out.println(client.copy(i));
+			System.out.println(client.copy(i)); //Print all the data of client list.
 			}
 		}
 	
@@ -126,10 +127,10 @@ public class Main{
 	System.out.println("n\n\tEnter the name of the second product:\t");
 	String product2 = keyboard.nextLine();
 	
-	Product x = product.SearchProduct(product1);
+	Product x = product.SearchProduct(product1); //Find the objects of the 2 different products in the list which contains all products.
 	Product y = product.SearchProduct(product2);
 	
-	System.out.println(order.amountProductInList(x,y));
+	System.out.println(order.amountProductInOrderList(x,y)); //Return the product which has more orders and show the amount.
 	}
 	
 	public static void manageDataShowAllOrders(ListOrders order) {
@@ -166,7 +167,7 @@ public class Main{
 					while(op!=4) {
 						switch(op) {
 						case 1: manageDataAddClient(client); break;
-						case 2: manageDataDeleteClient(client); break;
+						case 2: manageDataDeleteClient(client, order); break;
 						case 3: manageDataShowAllClients(client); break;
 						}	
 						break;
@@ -190,7 +191,7 @@ public class Main{
 	}
 	
 	public static void menuClient() {
-		
+		System.out.println("It works!");
 	}
 	//=========================================================================================================
 	

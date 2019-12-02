@@ -148,15 +148,23 @@ public class ListProducts {
 	/**
 	 * 
 	 */
-
 	
-	public void changeStock(Product product, int quantity) {
+	public void removeStock() {
+		int oldStock = 0;
 		for(int i=0; i<NumProducts; i++) {
-			if(list[i].getNameProduct().equals(product.getNameProduct())) {
-				list[i].setStockProduct(list[i].changeStock(quantity));
-			}
+			oldStock = list[i].getStockProduct();
+			list[i].setStockProduct(oldStock--);
 		}
 	}
+	
+	public void restoreStock() {
+		int oldStock = 0;
+		for(int i=0; i<NumProducts; i++) {
+			oldStock = list[i].getStockProduct();
+			list[i].setStockProduct(oldStock++);
+		}
+	}
+	
 	
 	public int amountProductInList(Product product) {
 		int counter = 0;

@@ -51,6 +51,22 @@ public class ListOrders {
 		boolean found = false;
 		for(int i=0;i<numOfOrders && !found;i++) {
 			if(listOfOrders[i].getOrderID().equals(orderID)) {
+				listOfOrders[i].getListProducts().removeStock();
+				listOfOrders[i]=null;
+				found=true;
+			}		
+		}
+	}
+	
+	/**
+	 * 
+	 * @param clientID
+	 */
+	public void deleteOrder(int clientID) {
+		boolean found = false;
+		for(int i=0;i<numOfOrders && !found;i++) {
+			if(listOfOrders[i].getClientID() == clientID) {
+				listOfOrders[i].getListProducts().removeStock();
 				listOfOrders[i]=null;
 				found=true;
 			}		
@@ -99,14 +115,22 @@ public class ListOrders {
 	 * @param product2
 	 * @return
 	 */
-	public Product amountProductInList(Product product1, Product product2) {
-		Product result = product1;;
+	public String amountProductInOrderList(Product product1, Product product2) {
+		String result = null;
+		int counter = 0;
 		for(int i=0; i<numOfOrders; i++) {
-			if(listOfOrders[i].getListProducts().amountProductInList(product1) < listOfOrders[i].getListProducts().amountProductInList(product1)) {
-				result = product2;
+			if(listOfOrders[i].getListProducts().amountProductInList(product1) > listOfOrders[i].getListProducts().amountProductInList(product1)) {
+				result = product1.toString();
+				counter = listOfOrders[i].getListProducts().amountProductInList(product1);
 			}
 		}
-		return(result);
+		
+		for(int i=0; i<numOfOrders; i++) {
+			if(listOfOrders[i].getListProducts().amountProductInList(product1) < listOfOrders[i].getListProducts().amountProductInList(product1)) {
+				result = product2.toString();
+				counter = listOfOrders[i].getListProducts().amountProductInList(product2);
+			}	
+		}
+	return(result + counter);
 	}
-	
 }
