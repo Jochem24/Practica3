@@ -67,7 +67,7 @@ public class ListProducts {
 	
 	public void DeleteProduct(int id) {
 		
-			if(list[id]!=null) {
+			if(list[id-1]!=null) {
 				list[id-1]=null;
 				}
 			}
@@ -118,7 +118,19 @@ public class ListProducts {
 		return x;
 	}
 	
-	
+	public Product SearchPosProduct(String p) {
+		int i=0;
+		boolean found=false;
+		Product x=null;
+		
+		for(i=0;i<NumProducts && !found;i++) {
+			if(list[i].getNameProduct().equals(p)) {
+				x = list[i];
+			}
+		}
+		
+		return x;
+	}
 	
 	public Product[] SearchNameProduct(String s) {
 		int i=0, j=0;
