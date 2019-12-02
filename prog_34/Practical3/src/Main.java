@@ -71,15 +71,18 @@ public class Main{
 					Software prod = new Software(name, OS);
 					product.addProduct(prod);
 					
+					Product x=product.SearchPosProduct(name);
+					
 					System.out.println("Please write its price: ");
 					double Price = keyboard.nextDouble();
-					prod.setPriceProduct(Price);
+					x.setPriceProduct(Price);
 					
 					System.out.println("How many units do you want to add? ");
 					int units = keyboard.nextInt();
-					prod.setStockProduct(units);
+					x.setStockProduct(units);
 					
 					break;
+					
 				case 2:
 					System.out.println("Please write the name of this hardware: ");
 					String n = keyboard.next();
@@ -105,7 +108,7 @@ public class Main{
 		
 	}
 	
-	public static void manageDataDeleteProduct(ListProducts product) {
+public static void manageDataDeleteProduct(ListProducts product) {
 		
 		product.ShowListProducts();
 		System.out.println("Please write the identifier of the product you want to delete: ");
@@ -199,7 +202,7 @@ public class Main{
 		while (op!=4) {
 			switch(op) {
 			case 1: showMenuProducts(); 
-					op = Integer.parseInt(keyboard.nextLine());
+					op = keyboard.nextInt();
 					while(op!=8) {
 						switch(op) {
 						case 1: manageDataAddProduct(product); break;
@@ -263,9 +266,10 @@ public class Main{
 			case 2: menuClient(); break;
 			}
 		showMenuStart();
-		op = Integer.parseInt(keyboard.nextLine());	
+		op = keyboard.nextInt();	
 		}		
 	}
 }
+
 
 
