@@ -1,10 +1,28 @@
 public class Software extends Product{
 	
 	private String NameOS;
-	
+	//private int identifier;
 
-	public Software(String nombre, double value, int available, String OS){
-		super(nombre, value, available);
+	/**
+	 * @return the identifier
+	 */
+	//public int getIdentifier() {
+	//	return identifier;
+	//}
+
+
+
+	/**
+	 * @param identifier the identifier to set
+	 */
+	//public void setIdentifier(int identifier) {
+	//	this.identifier = identifier;
+	//}
+
+
+
+	public Software(String nombre, String OS){
+		super(nombre);
 		NameOS = OS;
 	}
 
@@ -28,12 +46,12 @@ public class Software extends Product{
 
 	@Override
 	public String toString() {
-		return ("Software " +super.toString()+" NameOS=" + NameOS + "]");
+		return ("[Software " +super.toString()+" NameOS=" + NameOS + "]\n");
 	}
 
 	
 	public Software copy() {
-		Software same = new Software(nameProduct, priceProduct, stockProduct, NameOS);
+		Software same = new Software(nameProduct, NameOS);
 		return same;
 	}
 
