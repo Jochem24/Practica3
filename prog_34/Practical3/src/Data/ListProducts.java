@@ -1,3 +1,4 @@
+
 package Data;
 public class ListProducts {
 	private int NumProducts;

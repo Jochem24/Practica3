@@ -1,4 +1,5 @@
 package Data;
+
 public abstract class Product {
 
 	protected String nameProduct;

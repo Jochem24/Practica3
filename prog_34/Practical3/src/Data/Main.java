@@ -1,3 +1,4 @@
+
 package Data;
 
 import java.util.Scanner;
@@ -318,3 +319,4 @@ public static void manageDataDeleteProduct(ListProducts product) {
 		}		
 	}
 }
+
