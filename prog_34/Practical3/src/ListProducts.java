@@ -49,17 +49,31 @@ public class ListProducts {
 	
 	public void addProduct(Product p) {
 		boolean found = false;	
-		for(int i=0;i<NumProducts && !found;i++) {
+		int i,j=0;
+		for(i=0;i<NumProducts && !found;i++) {
 			if(list[i].equals(p)) {
-			found = true;
+				found = true;
+				list[i].stockProduct++;
 			}
 		}
 
 		if(NumProducts<list.length && !found) {
 			list[NumProducts] = p.copy();
+			j=NumProducts+1;
+			list[NumProducts].setIdentifier(j);
 			NumProducts++;
 		}
 	}
+	
+	public void DeleteProduct(int id) {
+		
+			if(list[id]!=null) {
+				if(list[id].identifier==id) {
+					list[id]=null;
+				}
+			}
+			
+		}
 	
 	public void ShowListProducts() {
 		int i;
@@ -131,6 +145,14 @@ public class ListProducts {
 		
 		return prod;
 	}
+	
+	public void ShowStockProducts() {
+		int i;
+		
+		for(i=0;i<NumProducts;i++) {
+			System.out.println("Product "+ list[i].nameProduct+" has "+list[i].stockProduct+" units");
+		}
+	}
 //===========================================================================================
 	private double totalPrice;
 	
@@ -176,4 +198,3 @@ public class ListProducts {
 		return(counter);
 	}
 }
-
