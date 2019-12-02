@@ -1,6 +1,10 @@
 public class Hardware extends Product{
 	
-	HardwareType Type;
+	private HardwareType Type;
+	
+	
+	
+	
 
 	/**
 	 * @return the type
@@ -18,19 +22,34 @@ public class Hardware extends Product{
 
 	
 
-	public Hardware(String nombre, double value, int available, HardwareType tipo) {
-		super(nombre, value, available);
+	public Hardware(String nombre, HardwareType tipo) {
+		super(nombre);
 		Type = tipo;
 	}
 	
+	/**
+	 * @return the identifier
+	 */
+	//public int getIdentifier() {
+	//	return identifier;
+	//}
+
+	/**
+	 * @param identifier the identifier to set
+	 */
+	//public void setIdentifier(int identifier) {
+	//	this.identifier = identifier;
+	//}
+
 	@Override
 	public String toString() {
-		return ("Hardware " +super.toString()+" Type = "+ Type);
+		return ("[Hardware " +super.toString()+" Type = "+ Type+"]\n");
 	}
 	
 	@Override
 	public Hardware copy() {
-		Hardware same = new Hardware(nameProduct, priceProduct, stockProduct, Type);
+		Hardware same = new Hardware(nameProduct, Type);
 		return same;
 	}
 }
+
