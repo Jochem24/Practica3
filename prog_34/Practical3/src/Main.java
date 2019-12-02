@@ -58,11 +58,61 @@ public class Main{
 	
 	
 	public static void manageDataAddProduct(ListProducts product) {
+		System.out.println("Choose between Software (1) or Hardware (2): ");
+			int number = keyboard.nextInt();
+				switch (number) {
+				case 1:
+					System.out.println("Please write the name of this software: ");
+					String name = keyboard.next();
+					
+					System.out.println("What type of Operating System does it have? ");
+					String OS = keyboard.next();
+					
+					Software prod = new Software(name, OS);
+					product.addProduct(prod);
+					
+					System.out.println("Please write its price: ");
+					double Price = keyboard.nextDouble();
+					prod.setPriceProduct(Price);
+					
+					System.out.println("How many units do you want to add? ");
+					int units = keyboard.nextInt();
+					prod.setStockProduct(units);
+					
+					break;
+				case 2:
+					System.out.println("Please write the name of this hardware: ");
+					String n = keyboard.next();
+					
+					System.out.println("Which type of hardware would you like? You can choose between: ");
+					System.out.println("CPU, MB, HDD, RAM, GPU, Peripheral ");
+					String T = keyboard.next();					
+					HardwareType TP = HardwareType.valueOf(T);
+					
+					Hardware p = new Hardware(n,TP);
+					product.addProduct(p);
+					
+					System.out.println("Please write its price: ");
+					double P = keyboard.nextDouble();
+					p.setPriceProduct(P);
+					System.out.println("How many units do you want to add? ");
+					int un = keyboard.nextInt();
+					p.setStockProduct(un);
+					
+					break;		
+			}
+		
 		
 	}
 	
 	public static void manageDataDeleteProduct(ListProducts product) {
 		
+		product.ShowListProducts();
+		System.out.println("Please write the identifier of the product you want to delete: ");
+		int id = keyboard.nextInt();
+		
+		product.DeleteProduct(id);
+		System.out.println("The product "+id+" has been deleted");
 	}
 	
 	public static void manageDataAddComputerPack(ListProducts product) {
@@ -70,7 +120,7 @@ public class Main{
 	}
 	
 	public static void manageDataShowStock(ListProducts product) {
-		
+		product.ShowStockProducts();
 	}
 	
 	public static void manageDataChangeStock(ListProducts product) {
@@ -82,8 +132,10 @@ public class Main{
 	}
 	
 	public static void manageDataShowCatalogue(ListProducts product) {
-		
+		product.ShowListProducts();
 	}
+	
+	
 	
 	//=========================================================================================================
 	
@@ -143,7 +195,7 @@ public class Main{
 	//=========================================================================================================
 	public static void menuOwner(int op, ListProducts product, ListClient client, ListOrders order) {
 		showMenuOwner();
-		op = Integer.parseInt(keyboard.nextLine());
+		op = keyboard.nextInt();
 		while (op!=4) {
 			switch(op) {
 			case 1: showMenuProducts(); 
@@ -163,7 +215,7 @@ public class Main{
 					break;
 			
 			case 2: showMenuClients(); 
-					op = Integer.parseInt(keyboard.nextLine());
+					op = keyboard.nextInt();
 					while(op!=4) {
 						switch(op) {
 						case 1: manageDataAddClient(client); break;
@@ -174,7 +226,7 @@ public class Main{
 					}
 					break;
 			case 3: showMenuOrders();
-					op = Integer.parseInt(keyboard.nextLine());
+					op = keyboard.nextInt();
 					while(op!=4) {
 						switch(op) {
 						case 1: manageDataProductsOrder(order, product, client); break;
@@ -186,7 +238,7 @@ public class Main{
 					break;
 			}
 		showMenuOwner();
-		op = Integer.parseInt(keyboard.nextLine());
+		op = keyboard.nextInt();
 		}
 	}
 	
@@ -215,3 +267,5 @@ public class Main{
 		}		
 	}
 }
+
+
