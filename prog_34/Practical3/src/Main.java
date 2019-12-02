@@ -46,7 +46,7 @@ public class Main{
 
 	public static void showMenuOrders() {
 		System.out.println("\n\n Options:");
-		System.out.println("\n\t1.   Show the products which appear in any order");
+		System.out.println("\n\t1.   Show the products which appear in any of the orders");
 		System.out.println("\t2.   Compare amount of orders of 2 products");
 		System.out.println("\t3.   Show all the orders in the system");
 		System.out.println("\t4.   Return to the owner menu");
@@ -97,7 +97,7 @@ public class Main{
 		postalAddress = keyboard.nextLine();
 		Client c = new Client(ID, email, postalAddress);
 		clientList.addClient(c);
-		System.out.println("\n\n\tClient succesfully added");
+		System.out.println("\n\n\tClient successfully added");
 	}
 	
 	public static void manageDataDeleteClient(ListClient client, ListOrders order) {
