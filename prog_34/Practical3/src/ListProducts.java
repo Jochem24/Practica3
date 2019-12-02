@@ -68,17 +68,18 @@ public class ListProducts {
 	public void DeleteProduct(int id) {
 		
 			if(list[id]!=null) {
-				if(list[id].identifier==id) {
-					list[id]=null;
+				list[id-1]=null;
 				}
 			}
 			
-		}
+		
 	
 	public void ShowListProducts() {
 		int i;
 		for (i=0;i<NumProducts;i++) {
+			if(list[i]!=null) {
 				System.out.println(list[i].toString());
+			}
 		}
 		
 	}
