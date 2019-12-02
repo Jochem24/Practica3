@@ -5,10 +5,10 @@ public abstract class Product {
 	protected int stockProduct;
 	protected int identifier;
 	
-	public Product(String name, double price, int stock) {
+	public Product(String name) {
 		nameProduct = name;
-		priceProduct = price;
-		stockProduct = stock;
+		priceProduct = 0;
+		stockProduct = 0;
 		identifier = 0;
 	}
 
@@ -22,18 +22,13 @@ public abstract class Product {
 		return identifier;
 	}
 
-
-
-
 	/**
 	 * @param identifier the identifier to set
 	 */
+	
 	public void setIdentifier(int identifier) {
 		this.identifier = identifier;
 	}
-
-
-
 
 	public String getNameProduct() {
 		return nameProduct;
@@ -64,7 +59,7 @@ public abstract class Product {
 	@Override
 	public String toString() {
 
-		return " nameProduct=" + nameProduct + ", priceProduct=" + priceProduct + ", stockProduct="
+		return identifier +" nameProduct=" + nameProduct + ", priceProduct=" + priceProduct + ", stockProduct="
 				+ stockProduct +"," ;
 
 		
@@ -73,12 +68,9 @@ public abstract class Product {
 	
 	public abstract Product copy();
 
-	public int changeStock(int quantity) {
-		int newStock = stockProduct -quantity;
-		stockProduct = newStock;
-		return(stockProduct);
-	}
+
 		
 	
 		
 }
+
