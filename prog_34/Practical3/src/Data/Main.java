@@ -1,9 +1,8 @@
-
 package Data;
 
 import java.io.*;
 import java.util.Scanner;
-
+import java.util.*;
 
 import Exceptions.*;
 import FileManagement.*;
@@ -20,7 +19,7 @@ public class Main{
 	public static void manageDataAddProduct(ListProducts product) {
 		int number = 0;
 		boolean correct = false;
-		
+		Product x=null;
 		
 		while(!correct) {
 			try {
@@ -48,7 +47,12 @@ public class Main{
 					
 					if(product.addProduct(prod)==false) {
 					correct = false;
-					Product x=product.SearchPosProduct(name);
+					try {
+						x=product.SearchPosProduct(name);
+					}catch(ProductNotFoundException e) {
+						System.out.println(e.toString());
+					}
+					
 					while(!correct){
 						try {
 							System.out.println("Please write its price: ");
@@ -78,7 +82,12 @@ public class Main{
 					}					
 					}else {
 						correct = false;
-						Product x=product.SearchPosProduct(name);
+						try {
+							x=product.SearchPosProduct(name);
+						}
+						catch(ProductNotFoundException e) {
+							System.out.println(e.toString());
+						}
 						while(!correct) {
 							try {
 								System.out.println("How many units do you want to add? ");
@@ -423,6 +432,7 @@ public class Main{
 	boolean found = false;
 		
 	//Find the objects of the 2 different products in the list which contains all products.
+	
 	
 	while(!found) {
 	System.out.println("n\n\tEnter the name of the first product:\t");
