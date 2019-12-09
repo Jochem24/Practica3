@@ -11,7 +11,7 @@ import Data.*;
 public class SerializedFileOrder {
 	
 	
-	
+	/*
 	public static void OrderStoreData(String file, ListOrders list) throws IOException {
 		FileOutputStream fileOutputStream = new FileOutputStream(file);
 		BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
@@ -19,10 +19,10 @@ public class SerializedFileOrder {
 		objectOutputStream.writeObject(list);
 		objectOutputStream.close();
 	}
-	
+	*/
 	
 
-	public void storeData(ListOrders listOrders, String filename) throws IOException  {
+	public static void storeData(ListOrders listOrders, String filename) throws IOException  {
 		
 		Product product;
 		Order order;
@@ -33,7 +33,7 @@ public class SerializedFileOrder {
 				order = listOrders.getListOrders()[i];
 				for(int j=0; j<order.getListProducts().getNumProducts(); j++) {
 					product = order.getListProducts().getList()[j];
-						writeLine += order.getClientID() + ";" + order.getOrderID() + ";" + product + ";" + order.getTotalPrice() + ";" + order.getDate() + ";[";
+						writeLine += order.getClientID() + "*" + order.getOrderID() + "*" + product + "*" + order.getTotalPrice() + "*" + order.getDate() + ";[";
 				}
 				writeLine += "]";
 				outputFile.writeObject(writeLine + "\n");
@@ -95,12 +95,14 @@ public class SerializedFileOrder {
 	catch(ClassCastException e) {
 		System.out.println("Error, the file format is not correct for the current class Order definition"+e);	
 	}
+	}
 	
+	/*
 	try {
 		for (int i=0; i<newList.getNumOfOrders(); i++) {
 
 	}
-
+	*/
 
 			
 	public void readData(Order[] list) {

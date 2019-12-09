@@ -77,7 +77,7 @@ public class Main{
 		
 	}
 	
-public static void manageDataDeleteProduct(ListProducts product) {
+	public static void manageDataDeleteProduct(ListProducts product) {
 		
 		product.ShowListProducts();
 		System.out.println("Please write the identifier of the product you want to delete: ");
@@ -207,7 +207,7 @@ public static void manageDataDeleteProduct(ListProducts product) {
 		}
 		
 		System.out.println("n\n\tEnter the date:\t");
-		String date = keyboard.next();
+		String date = keyboard.nextLine();
 		Order order = new Order(clientID, date);
 
 		ListProducts shoppingList = new ListProducts(99);
@@ -229,8 +229,7 @@ public static void manageDataDeleteProduct(ListProducts product) {
 		}
 		}
 	
-		error =false;
-		
+		error = false;
 		while(num!=2) {
 			while(!error) {
 			try {
@@ -240,7 +239,8 @@ public static void manageDataDeleteProduct(ListProducts product) {
 				error= true;
 			}
 			catch(ProductNotFoundException e) {
-				keyboard.next();
+				System.out.println(e.toString());
+				keyboard.nextLine();
 			}
 			}
 			
@@ -254,7 +254,7 @@ public static void manageDataDeleteProduct(ListProducts product) {
 			error = false;
 			while(!error) {
 			try{
-				clientID = keyboard.nextInt();
+				num = keyboard.nextInt();
 				error = true;
 			}
 			catch(java.util.InputMismatchException e) {
@@ -388,12 +388,22 @@ public static void manageDataDeleteProduct(ListProducts product) {
 
 	public static void main(String[] args) {
 	
-		
 		ListProducts product = new ListProducts(20);
 		ListClient client = new ListClient(20);
 		ListOrders order = new ListOrders(20);
+		
+		try {
+			SerializedFileOrder.OrderReadData("Order.txt");
+		}
+		catch(ClassNotFoundException e) {
+			System.out.println(e.toString());
+		}
+		catch(IOException e) {
+			System.out.println(e.toString());
+		}
+		
 
-		// SerializedFileOrder.OrderStoreData("Order.txt", order);
+		
 		int op;
 		
 		showMenus.showMenuStart();
@@ -411,6 +421,11 @@ public static void manageDataDeleteProduct(ListProducts product) {
 		System.out.println("\tPress 2 if NO");
 		op = keyboard.nextInt();
 		if(op==1) {
+			try {
+				SerializedFileOrder.storeData(order,"Order.txt");
+				}
+				catch(IOException e) {
+				}
 			System.out.println("\n\tChanges saved succesfully");
 		}
 	}
