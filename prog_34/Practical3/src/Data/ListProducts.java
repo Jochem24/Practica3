@@ -33,7 +33,7 @@ public class ListProducts {
 		String result = "";
 		
 		for(i=0;i<NumProducts;i++) {
-			result = result + list[i].toString();
+			result = result + list[i].toString() +"\n";
 		}
 		return result;
 	}
@@ -51,13 +51,12 @@ public class ListProducts {
 		
 	}
 	
-	public void addProduct(Product p) {
+	public boolean addProduct(Product p) {
 		boolean found = false;	
 		int i,j=0;
 		for(i=0;i<NumProducts && !found;i++) {
-			if(list[i].equals(p)) {
+			if(list[i].nameProduct.equals(p.nameProduct)) {
 				found = true;
-				list[i].stockProduct++;
 			}
 		}
 
@@ -67,14 +66,22 @@ public class ListProducts {
 			list[NumProducts].setIdentifier(j);
 			NumProducts++;
 		}
+		return found;
 	}
 	
-	public void DeleteProduct(int id) {
+	public boolean DeleteProduct(int id) {
+		boolean succesfull=false;
+		
 		
 			if(list[id-1]!=null) {
 				list[id-1]=null;
+				succesfull = true;
 				}
-			}
+		
+		
+			
+		return succesfull;		
+	}
 			
 		
 	
@@ -105,7 +112,7 @@ public class ListProducts {
 		return x;
 	}
 	
-	public Product SearchProduct(String p) throws ProductNotFoundException {
+	public Product SearchProduct(String p) {
 		int i=0;
 		boolean found=false;
 		Product x=null;
@@ -122,7 +129,7 @@ public class ListProducts {
 		return x;
 	}
 	
-	public Product SearchPosProduct(String p) throws ProductNotFoundException{
+	public Product SearchPosProduct(String p) {
 		int i=0;
 		boolean found=false;
 		Product x=null;
@@ -163,13 +170,36 @@ public class ListProducts {
 		return prod;
 	}
 	
+	public boolean ProductIdentifierExists(int id) {
+		boolean found=true;
+		
+		try {
+			if(list[id-1]==null) {
+				found = false;
+			}
+		}catch(ArrayIndexOutOfBoundsException e) {
+			System.out.println("Error "+e);
+			System.out.println("This identifier is out of the bounds in our list");
+			found = false;
+		}
+		return found;
+	}
+	
 	public void ShowStockProducts() {
 		int i;
 		
 		for(i=0;i<NumProducts;i++) {
 			if(list[i]!=null) {
 			System.out.println("Product "+ list[i].nameProduct+" has "+list[i].stockProduct+" units");
-			}
+		}
+		}
+	}
+	
+	
+	public void ChangeStockProduct(int id, int numChange) {
+		list[id-1].stockProduct = list[id-1].stockProduct + numChange; 
+		if(list[id-1].stockProduct<0) {
+			list[id-1].stockProduct=0;
 		}
 	}
 //===========================================================================================
