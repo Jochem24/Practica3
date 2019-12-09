@@ -1,4 +1,5 @@
 package Data;
+import Exceptions.*;
 
 public class MainClassTestClient {
 
@@ -14,10 +15,17 @@ public class MainClassTestClient {
 		ListClient test = new ListClient();
 		
 		//Adding new clients to the list
+		try {
 		test.addClient(j);
 		test.addClient(k);
 		test.addClient(l);
-		
+		}
+		catch(ClientListFullException e) {
+			
+		}
+		catch(ClientAlreadyExistsException e) {
+			
+		}
 	
 		System.out.println(test); //Check if adding to list is properly working.
 		
@@ -30,13 +38,18 @@ public class MainClassTestClient {
 		int i;
 		
 		
-		Software a = new Software("n", 35.00, 5, "Windows");
-		Software b = new Software("c", 10.00, 10, "Apple");
-		Hardware c = new Hardware("last", 15.00, 3, HardwareType.CPU);
-		Hardware d = new Hardware("nam", 20.00, 70, HardwareType.Peripheral);
+		Software a = new Software("n", "Windows");
+		Software b = new Software("c","Apple");
+		Hardware c = new Hardware("last", HardwareType.CPU);
+		Hardware d = new Hardware("nam", HardwareType.Peripheral);
 		ListProducts llist = new ListProducts(100);
 		
+		a.setPriceProduct(10); a.setStockProduct(15);
+		b.setPriceProduct(15); b.setStockProduct(20);
+		c.setPriceProduct(20); c.setStockProduct(25);
+		d.setPriceProduct(25); d.setStockProduct(30);
 		
+		/*
 		
 		System.out.println(a.toString());
 		System.out.println(b.toString());
@@ -45,7 +58,7 @@ public class MainClassTestClient {
 		
 		System.out.println(a.getNameProduct()); //checking if the product is created correctly
 		
-		
+		*/
 		
 		
 		llist.addProduct(a);			//testing method addProduct()
@@ -58,24 +71,9 @@ public class MainClassTestClient {
 		
 		
 		
-		System.out.println(llist);		//testing if the objects are added correctly. Works correctly
+		//System.out.println(llist);		//testing if the objects are added correctly. Works correctly
 		
-		llist.ShowListProducts();		//testing the method to show all the products in the list. Works correctly
-		
-		
-		
-		
-		for (i=0;i<llist.getNumProducts();i++) {   				//method to search and return the list of product given its name works correctly
-			if(LP[i]!=null) {
-			System.out.println(LP[i]);
-		}
-		}
-		
-		for(i=0;i<llist.getNumProducts();i++) {					//method to search for the products in stock works correctly
-			if(LP2[i]!=null) {
-				System.out.println(LP2[i]);
-			}
-		}
+		//llist.ShowListProducts();		//testing the method to show all the products in the list. Works correctly
 		
 
 		//========================================================
@@ -84,32 +82,38 @@ public class MainClassTestClient {
 		llist2.addProduct(b);			
 		llist2.addProduct(d);
 		
+		ListProducts llist3 = new ListProducts(100); 
+		llist3.addProduct(b);			
+		llist3.addProduct(d);
+	
+		
 		String date = "28-11-2019"; // create new orders
 		Order test1 = new Order(j.getID(),date);
 		Order test2 = new Order(k.getID(),date);
 
-		test1.setListProducts(llist);	//assign lists of products to the order
-		test2.setListProducts(llist2);
+		ListProducts llistNew = llist.removeStock(llist2); //remove stock
+		ListProducts llistNew2 = llistNew.removeStock(llist3);
 		
-		System.out.println(test1);	//test if adding list of products is successful
-		System.out.println(test2);
+		test1.setListProducts(llist2); //assign lists of products to the order
+		test2.setListProducts(llist3);
 		
 		test1.setTotalPrice(test1.getListProducts().calculateTotalPrice());	//calculating the total price of the order and changing the value.
 		test2.setTotalPrice(test2.getListProducts().calculateTotalPrice());
-		
-		
-		
+	
 		ListOrders list = new ListOrders(20); // create new list of orders
 		
+		try {
 		list.addOrder(test1); // add orders to the list of orders
 		list.addOrder(test2);
-		
-		test1.getListProducts().removeStock();
-		test2.getListProducts().removeStock();
-		
-		for (i=0;i<list.getNumOfOrders();i++) {   			
-			System.out.println(list.copy(i)); // the copy command does not work properly.
 		}
+		catch(OrderListFullException e) {
+			
+		}
+		 
+		System.out.println(list.toString()); //
+		
+		System.out.println(llistNew2.toString());
+		
 		
 		
 }

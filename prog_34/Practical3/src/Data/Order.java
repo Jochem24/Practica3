@@ -1,7 +1,9 @@
 package Data;
 
+import java.io.*;
 
-public class Order {
+public class Order implements Serializable {
+	static final long serialVersionIUD = 1;
 	
 	private int clientID;
 	private String orderID;

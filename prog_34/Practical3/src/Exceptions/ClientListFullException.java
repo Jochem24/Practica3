@@ -1,8 +1,8 @@
 package Exceptions;
 
-public class ListClientFullException extends Exception {
+public class ClientListFullException extends Exception {
 	
-	public ListClientFullException() {
+	public ClientListFullException() {
 		super("The client cannot be added to the list, because the list is full.");
 	}
 }

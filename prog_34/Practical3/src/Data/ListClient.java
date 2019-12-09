@@ -11,8 +11,8 @@ public class ListClient {
 	 * Create a new list of the type ListClient, indicate the size of the list in the arguments.
 	 * @param size The size of the list ListClient.
 	 */
-	public ListClient() {
-		list = new Client[1];
+	public ListClient(int size) {
+		list = new Client[size];
 	}
 	
 	/**
@@ -23,12 +23,16 @@ public class ListClient {
 		return (numOfClients);
 	}
 	
+	public Client[] getListClient() {
+		return list;
+	}
+	
 	/**
 	 * 
 	 * @return
 	 */
 	public ListClient copy() {
-		ListClient list = new ListClient();
+		ListClient list = new ListClient(20);
 		return(list);
 	}
 	
@@ -48,32 +52,31 @@ public class ListClient {
 	 * Adding a new client to the list if the ID is unique.
 	 * @param client The object Client added to the list ListClient.
 	 */
-	public void addClient(Client client) throws ClientAlreadyExistsException, ListClientFullException {		
+	public void addClient(Client client) throws ClientAlreadyExistsException, ClientListFullException {		
 		boolean found = false;	
 		for(int i=0;i<numOfClients && !found;i++) {
 			if(list[i].getID() == client.getID()) {
 				found = true;
+				throw new ClientAlreadyExistsException();
 			}
-			else throw new ClientAlreadyExistsException();
 		}
-
+		
 		if(numOfClients<list.length && !found) {
 			list[numOfClients] = client.copy();
 			numOfClients++;}
-		else if(found = true) {
-			throw new ListClientFullException();
-		}
-		}
-	
+		else throw new ClientListFullException();
+	}
 
 	/**
 	 * Delete a client from the list.
 	 * @param client The object to be deleted from the list.
 	 */
-	public void deleteClient(Client client) {
-		for(int i=0;i<numOfClients;i++) {
-			if(list[i] != null && list[i].getID() == client.getID()) {
+	public void deleteClient(int clientID) {
+		boolean found = false;
+		for(int i=0;i<numOfClients && !found;i++) {
+			if(list[i].getID() == clientID) {
 				list[i] = null;
+				found = true;
 			}
 		}
 	}
@@ -83,7 +86,7 @@ public class ListClient {
 	 * @param ID
 	 * @return
 	 */
-	public boolean checkClient(int ID) {
+	public boolean checkClient(int ID){
 		boolean found = false;
 		for(int i=0; i<numOfClients && !found; i++) {
 			if(list[i].getID() == ID) {
@@ -98,7 +101,7 @@ public class ListClient {
 	 * @param ID
 	 * @return
 	 */
-	public Client searchClient(int ID) {
+	public Client searchClient(int ID) throws ClientNotFoundException {
 		int j=0;
 		boolean found = false;
 		for(int i=0; i<numOfClients && !found; i++) {
@@ -106,6 +109,9 @@ public class ListClient {
 				found = true;
 				j=i;
 			}
+		}
+		if(j==0) {
+			throw new ClientNotFoundException();
 		}
 		return(list[j].copy());
 	}

@@ -1,70 +1,24 @@
 
 package Data;
 
+import java.io.*;
 import java.util.Scanner;
 
-import Exceptions.ClientAlreadyExistsException;
-import Exceptions.ListClientFullException;
+
+import Exceptions.*;
+import FileManagement.*;
+import Menus.*;
 
 public class Main{
 	
 	static Scanner keyboard=new Scanner(System.in);
 
 	
-	public static void showMenuStart() {
-		System.out.println("\n\n Options:");
-		System.out.println("\n\t1.   Owner");
-		System.out.println("\t2.   Client");
-		System.out.println("\t3.   Close the system");
-		System.out.print("\n\tChoose an option:\n");
-	}
-	
-	public static void showMenuOwner() {
-		System.out.println("\n\n Options:");
-		System.out.println("\n\t1.   Manage products");
-		System.out.println("\t2.   Manage clients");
-		System.out.println("\t3.   Manage orders");
-		System.out.println("\t4.   Return to the start screen");
-		System.out.print("\n\tChoose an option:\n");
-	}
-	
-	public static void showMenuProducts() {
-		System.out.println("\n\n Options:");
-		System.out.println("\n\t1.   Add a new product");
-		System.out.println("\t2.   Delete a product");
-		System.out.println("\t3.   Add a new computer pack");
-		System.out.println("\t4.   Show available stock");
-		System.out.println("\t5.   Change available stock of a product");
-		System.out.println("\t6.   Show all products which are part of any computer packs");
-		System.out.println("\t7.   Show the product catalogue");
-		System.out.println("\t8.   Return to the owner menu");
-		System.out.print("\n\tChoose an option:\n");
-	}
-	
-	public static void showMenuClients() {
-		System.out.println("\n\n Options:");
-		System.out.println("\n\t1.   Add a client");
-		System.out.println("\t2.   Remove a client");
-		System.out.println("\t3.   Show all the clients in the system");
-		System.out.println("\t4.   Return to the owner menu");
-		System.out.print("\n\t\t\tChoose an option:\n");
-	}
-
-	public static void showMenuOrders() {
-		System.out.println("\n\n Options:");
-		System.out.println("\t1.   Add a new order");
-		System.out.println("\n\t2.   Show the products which appear in any of the orders");
-		System.out.println("\t3.   Compare amount of orders of 2 products");
-		System.out.println("\t4.   Show all the orders in the system");
-		System.out.println("\t5.   Return to the owner menu");
-		System.out.print("\n\t\t\tChoose an option:\n");
-		
-	}
-	
 	//=========================================================================================================
 	
 	
 	public static void manageDataAddProduct(ListProducts product) {
+		Product x = null; Product y = null;
 		System.out.println("Choose between Software (1) or Hardware (2): ");
 			int number = keyboard.nextInt();
 				switch (number) {
@@ -77,8 +31,11 @@ public class Main{
 					
 					Software prod = new Software(name, OS);
 					product.addProduct(prod);
-					
-					Product x=product.SearchPosProduct(name);
+					try {
+					x=product.SearchPosProduct(name);
+					}
+					catch(ProductNotFoundException e) {
+					}
 					
 					System.out.println("Please write its price: ");
 					double Price = keyboard.nextDouble();
@@ -102,7 +59,11 @@ public class Main{
 					Hardware p = new Hardware(n,TP);
 					product.addProduct(p);
 					
-					Product y=product.SearchPosProduct(n);
+					try {
+					y=product.SearchPosProduct(n);
+					}
+					catch(ProductNotFoundException e) {
+					}
 					System.out.println("Please write its price: ");
 					double P = keyboard.nextDouble();
 					y.setPriceProduct(P);
@@ -150,26 +111,74 @@ public static void manageDataDeleteProduct(ListProducts product) {
 	
 	//=========================================================================================================
 	
-	public static void manageDataAddClient(ListClient clientList){
-		int ID; String email, postalAddress;
+	public static void manageDataAddClient(ListClient clientList, ListOrders order, ListProducts product){
+		int ID=0; String email, postalAddress;
+		boolean error = false;
+		
+		while(!error) {
 		System.out.println("\n\n\tEnter the ID of the client:\t");
-		ID = keyboard.nextInt();
+		try{
+			ID = keyboard.nextInt();
+			error = true;
+		}
+		catch(java.util.InputMismatchException e) {
+			System.out.println("\n\n\tPlease enter an integer"); 
+			keyboard.next();
+		}
+		}
+		
 		System.out.println("\n\n\tEnter the email address of the client:\t");
 		email = keyboard.next();
 		System.out.println("\n\n\tEnter the postal address of the client:\t");
 		postalAddress = keyboard.next();
 		Client c = new Client(ID, email, postalAddress);
-		//clientList.addClient(c);
+		
+		try {
+		clientList.addClient(c);
 		System.out.println("\n\n\tClient successfully added");
+		}
+		catch(ClientListFullException e){
+			System.out.println(e.toString());
+		}
+		catch(ClientAlreadyExistsException e) {
+			System.out.println(e.toString());
+		}
+		
 	}
 	
-	public static void manageDataDeleteClient(ListClient client, ListOrders order) {
-		int ID;
+	public static void manageDataDeleteClient(ListClient client, ListOrders order, ListProducts product) {
+		int clientID=0; Client c = null;
+		boolean error = false;
+		
+		while(!error) {
 		System.out.println("n\n\tEnter the ID of the client you want to delete:\t");
-		ID = keyboard.nextInt();
-		Client c = client.searchClient(ID); //Find the object of the client based on the clientID of the person.
-		client.deleteClient(c); //Delete the client from the list of Clients.
-		order.searchOrders(ID).deleteOrder(ID); //Delete all the orders the client has made and restore the stock of the products.
+		try{
+			clientID = keyboard.nextInt();
+			error = true;
+		}
+		catch(java.util.InputMismatchException e) {
+			System.out.println("\n\n\tPlease enter an integer"); 
+			keyboard.next();
+		}
+		}
+		
+		ListOrders allOrdersClient = null;
+		
+		//Find all the orders of the client. Delete the existing orders.
+		try {
+			allOrdersClient = order.searchOrders(clientID);
+			order.deleteAllOrders(clientID);
+		}
+		catch(OrderListFullException e){
+			e.toString();
+		}
+		
+		//Return new catalog with updated stock.
+		for(int i=0; i<allOrdersClient.getNumOfOrders(); i++) {
+			product.restoreStock(allOrdersClient.getListOrders()[i].getListProducts());
+		}
+	
+		client.deleteClient(clientID); //Delete the client from the list of Clients.
 		
 	}
 
@@ -181,9 +190,22 @@ public static void manageDataDeleteProduct(ListProducts product) {
 	
 	//=========================================================================================================
 	
-	public static void manageDataAddOrder(ListOrders listOrders, ListProducts product) {
+	public static void manageDataAddOrder(ListOrders listOrders, ListClient client, ListProducts product) {
+		int clientID = 0; int num = 0; Product x = null;
+		boolean error = false;
+		
 		System.out.println("n\n\tEnter the clientID:\t");
-		int clientID = keyboard.nextInt();
+		while(!error && client.checkClient(clientID) == true) {
+		try{
+			clientID = keyboard.nextInt();
+			error = true;
+		}
+		catch(java.util.InputMismatchException e) {
+			System.out.println("n\n\tPlease enter an integer");
+			keyboard.next();
+		}
+		}
+		
 		System.out.println("n\n\tEnter the date:\t");
 		String date = keyboard.next();
 		Order order = new Order(clientID, date);
@@ -193,48 +215,111 @@ public static void manageDataDeleteProduct(ListProducts product) {
 		System.out.println("\n\n Options:");
 		System.out.println("\t1.Add a product to the shoppinglist\t");
 		System.out.println("\t2.Complete the shoppinglist\t");
+		System.out.println("n\n\tEnter the clientID:\t");
 		
-		int num = keyboard.nextInt();
+		error = false;
+		while(!error) {
+		try{
+			clientID = keyboard.nextInt();
+			error = true;
+		}
+		catch(java.util.InputMismatchException e) {
+			System.out.println("n\n\tPlease enter an integer");
+			keyboard.next();
+		}
+		}
 	
+		error =false;
+		
 		while(num!=2) {
-			System.out.println("n\n\tEnter the name of the product:\t");
-			String nameProduct = keyboard.next();
+			while(!error) {
+			try {
+				System.out.println("n\n\tEnter the name of the product:\t");	
+				String nameProduct = keyboard.next();
+				x = product.SearchPosProduct(nameProduct);
+				error= true;
+			}
+			catch(ProductNotFoundException e) {
+				keyboard.next();
+			}
+			}
 			
-			Product x = product.SearchPosProduct(nameProduct);
-			
+			product.removeStock(x);
 			shoppingList.addProduct(x);
-			
+
 			System.out.println("\n\n Options:");
 			System.out.println("\t1.Add a prodcut to the shoppinglist\t");
 			System.out.println("\t2.Complete the shoppinglist\t");
 			
-			num = keyboard.nextInt();
+			error = false;
+			while(!error) {
+			try{
+				clientID = keyboard.nextInt();
+				error = true;
+			}
+			catch(java.util.InputMismatchException e) {
+				System.out.println("n\n\tPlease enter an integer");
+				keyboard.next();
+			}
+			}
 		}
-		
-		
+
 		order.setTotalPrice(shoppingList.calculateTotalPrice());
 		order.setListProducts(shoppingList);
 		
-		listOrders.addOrder(order);
-		
-		System.out.println("The order is added to the list\t");
+		try {
+			listOrders.addOrder(order);
+			System.out.println("n\n\tThe order is added to the list\t");
+		}
+		catch(OrderListFullException e) {
+			System.out.println("n\n\tThe order list is full\t");
+		}
 	}
 	
 	public static void manageDataProductsOrder(ListOrders order, ListProducts product, ListClient client) {
-	order.productsInOrder(product, client);	
+	String[] list = null;
+	try {
+		list = order.productsInOrder(product, client);	
+	}
+	catch(ClientNotFoundException e) {
+		System.out.println("The client does not exist");
+	}
+	System.out.println(list);
 	}
 	
 	public static void manageDataCompareOrdersProducts(ListOrders order, ListProducts product) {
+	Product x = null; Product y =null;
+	boolean found = false;
+		
+	//Find the objects of the 2 different products in the list which contains all products.
+	
+	while(!found) {
 	System.out.println("n\n\tEnter the name of the first product:\t");
-	String product1 = keyboard.next();
+	try {
+		String product1 = keyboard.next();
+		x = product.SearchProduct(product1); 
+		found = true;
+	}
+	catch(ProductNotFoundException e) {
+		keyboard.next();
+	}
+	}
+	
+	found = false;
+	while(!found) {
 	System.out.println("n\n\tEnter the name of the second product:\t");
-	String product2 = keyboard.next();
-	
-	Product x = product.SearchProduct(product1); //Find the objects of the 2 different products in the list which contains all products.
-	Product y = product.SearchProduct(product2);
-	
+	try {
+		String product2 = keyboard.next();
+		y = product.SearchProduct(product2);
+		found = true;
+	}
+	catch(ProductNotFoundException e) {
+		keyboard.next();
+	}
+	}
 	System.out.println(order.amountProductInOrderList(x,y)); //Return the product which has more orders and show the amount.
 	}
+	
 	
 	public static void manageDataShowAllOrders(ListOrders order) {
 		for(int i=0;i<order.getNumOfOrders();i++) {	
@@ -245,11 +330,11 @@ public static void manageDataDeleteProduct(ListProducts product) {
 	
 	//=========================================================================================================
 	public static void menuOwner(int op, ListProducts product, ListClient client, ListOrders order) {
-		showMenuOwner();
+		showMenus.showMenuOwner();
 		op = keyboard.nextInt();
 		while (op!=4) {
 			switch(op) {
-			case 1: showMenuProducts(); 
+			case 1: showMenus.showMenuProducts(); 
 					op = keyboard.nextInt();
 					while(op!=8) {
 						switch(op) {
@@ -265,22 +350,22 @@ public static void manageDataDeleteProduct(ListProducts product) {
 					}
 					break;
 			
-			case 2: showMenuClients(); 
+			case 2: showMenus.showMenuClients(); 
 					op = keyboard.nextInt();
 					while(op!=4) {
 						switch(op) {
-						case 1: manageDataAddClient(client); break;
-						case 2: manageDataDeleteClient(client, order); break;
+						case 1: manageDataAddClient(client,order,product); break;
+						case 2: manageDataDeleteClient(client, order, product); break;
 						case 3: manageDataShowAllClients(client); break;
 						}	
 						break;
 					}
 					break;
-			case 3: showMenuOrders();
+			case 3: showMenus.showMenuOrders();
 					op = keyboard.nextInt();
 					while(op!=5) {
 						switch(op) {
-						case 1:	manageDataAddOrder(order, product); break;
+						case 1:	manageDataAddOrder(order, client, product); break;
 						case 2: manageDataProductsOrder(order, product, client); break;
 						case 3: manageDataCompareOrdersProducts(order, product); break;
 						case 4: manageDataShowAllOrders(order); break;
@@ -289,7 +374,7 @@ public static void manageDataDeleteProduct(ListProducts product) {
 					}
 					break;
 			}
-		showMenuOwner();
+		showMenus.showMenuOwner();
 		op = keyboard.nextInt();
 		}
 	}
@@ -297,26 +382,37 @@ public static void manageDataDeleteProduct(ListProducts product) {
 	public static void menuClient() {
 		System.out.println("It works!");
 	}
-	//=========================================================================================================
 	
+	//=========================================================================================================
+
+
 	public static void main(String[] args) {
+	
 		
 		ListProducts product = new ListProducts(20);
-		ListClient client = new ListClient();
+		ListClient client = new ListClient(20);
 		ListOrders order = new ListOrders(20);
-		
+
+		// SerializedFileOrder.OrderStoreData("Order.txt", order);
 		int op;
 		
-		showMenuStart();
-		op = Integer.parseInt(keyboard.nextLine());
+		showMenus.showMenuStart();
+		op = keyboard.nextInt();
 		while(op!=3) {
 			switch(op) {
 			case 1: menuOwner(op, product, client, order); break;		
 			case 2: menuClient(); break;
 			}
-		showMenuStart();
+		showMenus.showMenuStart();
 		op = keyboard.nextInt();	
-		}		
+		}
+		System.out.println("\n\n\tDo you want to save the changes in the files?");
+		System.out.println("\n\tPress 1 if YES");
+		System.out.println("\tPress 2 if NO");
+		op = keyboard.nextInt();
+		if(op==1) {
+			System.out.println("\n\tChanges saved succesfully");
+		}
 	}
 }
 

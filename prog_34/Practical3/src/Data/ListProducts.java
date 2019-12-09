@@ -1,5 +1,7 @@
 
 package Data;
+import Exceptions.*;
+
 public class ListProducts {
 	private int NumProducts;
 	private Product[] list;
@@ -103,7 +105,7 @@ public class ListProducts {
 		return x;
 	}
 	
-	public Product SearchProduct(String p) {
+	public Product SearchProduct(String p) throws ProductNotFoundException {
 		int i=0;
 		boolean found=false;
 		Product x=null;
@@ -120,7 +122,7 @@ public class ListProducts {
 		return x;
 	}
 	
-	public Product SearchPosProduct(String p) {
+	public Product SearchPosProduct(String p) throws ProductNotFoundException{
 		int i=0;
 		boolean found=false;
 		Product x=null;
@@ -184,23 +186,38 @@ public class ListProducts {
 	}
 	
 	
-	/**
-	 * 
-	 */
-	
-	public void removeStock() {
-		int oldStock = 0;
-		for(int i=0; i<NumProducts; i++) {
-			oldStock = list[i].getStockProduct();
-			list[i].setStockProduct(oldStock--);
+	public int SearchPositionProduct(Product product) {
+		boolean found=false;
+		int position=0;
+		
+		for(int i=0;i<NumProducts && !found;i++) {
+		position++;	
+			if(list[i] == product) {
+			found = true;
+			}
 		}
+		return (position);
 	}
 	
-	public void restoreStock() {
-		int oldStock = 0;
+	
+	public void removeStock(Product product) {
+		int position; int newStock;
+			for(int i=0; i<NumProducts; i++) {
+				position = SearchPositionProduct(product);
+				newStock = list[i].getStockProduct()-1;
+				list[i].setStockProduct(newStock);
+				list[position] = list[i];
+			}
+	}
+	
+	
+	public void restoreStock(ListProducts shoppingList) {
+		int newStock;
 		for(int i=0; i<NumProducts; i++) {
-			oldStock = list[i].getStockProduct();
-			list[i].setStockProduct(oldStock++);
+			
+			newStock = list[i].getStockProduct()+1;
+			list[i].setStockProduct(newStock);
+			
 		}
 	}
 	

@@ -1,10 +1,11 @@
 package Data;
 
+import Exceptions.*;
 import java.io.*;
-import java.util.Arrays;
 
-public class ListOrders implements Serializable  {
-	static final long SerialVersionUID = 1L;
+
+public class ListOrders implements Serializable{
+	static final long serialVersionIUD = 1;
 	
 	private int numOfOrders;
 	private Order[] listOfOrders;
@@ -17,6 +18,9 @@ public class ListOrders implements Serializable  {
 		listOfOrders = new Order[size];
 	}
 
+	public Order[] getListOrders() {
+		return listOfOrders;
+	}
 	/**
 	 * Add an order to a list which contains all the different orders.
 	 * @param order
@@ -40,11 +44,12 @@ public class ListOrders implements Serializable  {
 	}
 	
 	
-	public void addOrder(Order order){
+	public void addOrder(Order order) throws OrderListFullException{
 		if(numOfOrders<listOfOrders.length) {
-			listOfOrders[numOfOrders] = order;
+			listOfOrders[numOfOrders] = order; //Have to use a reference because copy will return the "empty" constructor again.
 			numOfOrders++;
 		}
+		else throw new OrderListFullException();
 	}
 
 	/**
@@ -52,30 +57,35 @@ public class ListOrders implements Serializable  {
 	 * @param orderID The ID of the order to find the order in the list.
 	 * @param listProducts 
 	 */
-	public void deleteOrder(String orderID) {
+	//still have to change stock
+	public void deleteOrder(String orderID) throws OrderIDNotFoundException {
 		boolean found = false;
 		for(int i=0;i<numOfOrders && !found;i++) {
 			if(listOfOrders[i].getOrderID().equals(orderID)) {
-				listOfOrders[i].getListProducts().removeStock();
 				listOfOrders[i]=null;
 				found=true;
-			}		
+			}
+		}
+		if(!found) {
+			throw new OrderIDNotFoundException();
 		}
 	}
 	
 	/**
 	 * 
 	 * @param clientID
+	 * @param catalogue
 	 */
-	public void deleteOrder(int clientID) {
-		boolean found = false;
-		for(int i=0;i<numOfOrders && !found;i++) {
+	
+	public void deleteAllOrders(int clientID){ //, ListProducts catalogue
+		//ListProducts shoppingList;
+		for(int i=0;i<numOfOrders;i++) {
 			if(listOfOrders[i].getClientID() == clientID) {
-				listOfOrders[i].getListProducts().removeStock();
-				listOfOrders[i]=null;
-				found=true;
-			}		
-		}
+				//shoppingList = listOfOrders[i].getListProducts();
+				//catalogue.restoreStock(shoppingList);
+				listOfOrders[i] = null;
+			}
+		}	
 	}
 	
 	
@@ -85,18 +95,27 @@ public class ListOrders implements Serializable  {
 	 * @return A list of all orders the customer has made.
 	 */
 	
-	public ListOrders searchOrders(int clientID) {
+	public ListOrders searchOrders(int clientID) throws OrderListFullException {
 		ListOrders list = new ListOrders(20);
 		for(int i=0;i<numOfOrders;i++) {
 			if(listOfOrders[i].getClientID() == clientID){
 				list.addOrder(listOfOrders[i]);
 			}
 		}
+		if(list.getNumOfOrders()==19) {	
+			throw new OrderListFullException();
+		}
 		return(list);	
 	}
 	
 	
-	public Order SearchPosOrder(String orderID) {
+	/**
+	 * 
+	 * @param orderID
+	 * @return
+	 * @throws OrderIDNotFoundException
+	 */
+	public Order SearchPosOrder(String orderID) throws OrderIDNotFoundException{
 		int i=0;
 		boolean found=false;
 		Order x=null;
@@ -105,6 +124,9 @@ public class ListOrders implements Serializable  {
 			if(listOfOrders[i].getOrderID().equals(orderID)) {
 				x = listOfOrders[i];
 			}
+		}
+		if(!found) {
+			throw new OrderIDNotFoundException();
 		}
 		
 		return x;
@@ -117,7 +139,7 @@ public class ListOrders implements Serializable  {
 	 * @return
 	 */
 	
-	public String[] productsInOrder(ListProducts listProducts, ListClient listClient) {
+	public String[] productsInOrder(ListProducts listProducts, ListClient listClient) throws ClientNotFoundException {
 		Client client;
 		int j=0;
 		String[] list = new String[20];
