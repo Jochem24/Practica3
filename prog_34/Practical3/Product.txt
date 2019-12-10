@@ -1,0 +1,10 @@
+[Hardware 1 nameProduct=Intel, priceProduct=179.99, stockProduct=12, Type = CPU]
+[Hardware 2 nameProduct=AMD, priceProduct=235.0, stockProduct=25, Type = MB]
+[Hardware 3 nameProduct=NVidea, priceProduct=400.0, stockProduct=8, Type = RAM]
+[Hardware 4 nameProduct=Intel2, priceProduct=245.5, stockProduct=3, Type = HDD]
+[Hardware 5 nameProduct=AMD2, priceProduct=400.0, stockProduct=28, Type = GPU]
+[Hardware 6 nameProduct=Intel3, priceProduct=310.8, stockProduct=14, Type = Peripheral]
+[Software 7 nameProduct=Windows10, priceProduct=50.0, stockProduct=100, NameOS=Windows]
+[Software 8 nameProduct=OS X, priceProduct=80.99, stockProduct=56, NameOS=Apple]
+[Software 9 nameProduct=Linux, priceProduct=10.0, stockProduct=46, NameOS=Linux]
+

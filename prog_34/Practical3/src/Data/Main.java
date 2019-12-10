@@ -1,9 +1,8 @@
-
 package Data;
 
 import java.io.*;
 import java.util.Scanner;
-
+import java.util.*;
 
 import Exceptions.*;
 import FileManagement.*;
@@ -18,9 +17,24 @@ public class Main{
 	
 	
 	public static void manageDataAddProduct(ListProducts product) {
-		Product x = null; Product y = null;
-		System.out.println("Choose between Software (1) or Hardware (2): ");
-			int number = keyboard.nextInt();
+		int number = 0;
+		boolean correct = false;
+		Product x=null;
+		
+		while(!correct) {
+			try {
+				System.out.println("Choose between Software (1) or Hardware (2): ");
+				number = keyboard.nextInt();
+				correct = true;
+			}catch(InputMismatchException e){
+				System.out.println("Error "+e);
+				System.out.println("The input should be an integer");
+				keyboard.nextLine();
+			}
+			
+		}	
+		
+		
 				switch (number) {
 				case 1:
 					System.out.println("Please write the name of this software: ");
@@ -30,61 +44,150 @@ public class Main{
 					String OS = keyboard.next();
 					
 					Software prod = new Software(name, OS);
-					product.addProduct(prod);
+					
+					if(product.addProduct(prod)==false) {
+					correct = false;
 					try {
-					x=product.SearchPosProduct(name);
+						x=product.SearchPosProduct(name);
+					}catch(ProductNotFoundException e) {
+						System.out.println(e.toString());
 					}
-					catch(ProductNotFoundException e) {
+					
+					while(!correct){
+						try {
+							System.out.println("Please write its price: ");
+							double Price = keyboard.nextDouble();
+							x.setPriceProduct(Price);
+							correct = true;
+						}catch(InputMismatchException e) {
+							System.out.println("Error "+e);
+							System.out.println("The input should be a double");
+							keyboard.nextLine();
+						}
 					}
 					
-					System.out.println("Please write its price: ");
-					double Price = keyboard.nextDouble();
-					x.setPriceProduct(Price);
+					correct = false;
 					
-					System.out.println("How many units do you want to add? ");
-					int units = keyboard.nextInt();
-					x.setStockProduct(units);
-					
-					break;
+					while(!correct) {
+						try {
+							System.out.println("How many units do you want to add? ");
+							int units = keyboard.nextInt();
+							x.setStockProduct(units);
+							correct = true;
+						}catch(InputMismatchException e) {
+							System.out.println("Error "+e);
+							System.out.println("The input should be an integer");
+							keyboard.nextLine();
+						}
+					}					
+					}else {
+						correct = false;
+						try {
+							x=product.SearchPosProduct(name);
+						}
+						catch(ProductNotFoundException e) {
+							System.out.println(e.toString());
+						}
+						while(!correct) {
+							try {
+								System.out.println("How many units do you want to add? ");
+								int units = keyboard.nextInt();
+								x.setStockProduct(x.stockProduct + units);
+								correct = true;
+							}catch(InputMismatchException e) {
+								System.out.println("Error "+e);
+								System.out.println("The input should be an integer");
+								keyboard.nextLine();
+							}
+						}	
+					}
+						break;
 					
 				case 2:
 					System.out.println("Please write the name of this hardware: ");
 					String n = keyboard.next();
-					
-					System.out.println("Which type of hardware would you like? You can choose between: ");
-					System.out.println("CPU, MB, HDD, RAM, GPU, Peripheral ");
-					String T = keyboard.next();					
-					HardwareType TP = HardwareType.valueOf(T);
+					HardwareType TP = null;
+					String T;
+					correct = false;
+					while(!correct) {
+						try {
+							System.out.println("Which type of hardware would you like? You can choose between: ");
+							System.out.println("CPU, MB, HDD, RAM, GPU, Peripheral ");
+							T = keyboard.next();	
+							TP = HardwareType.valueOf(T);
+							correct = true;
+						}catch(IllegalArgumentException e) {
+							System.out.println("Error "+e);
+							keyboard.nextLine();
+						}
+					}
 					
 					Hardware p = new Hardware(n,TP);
 					product.addProduct(p);
 					
-					try {
-					y=product.SearchPosProduct(n);
-					}
-					catch(ProductNotFoundException e) {
-					}
-					System.out.println("Please write its price: ");
-					double P = keyboard.nextDouble();
-					y.setPriceProduct(P);
-					System.out.println("How many units do you want to add? ");
-					int un = keyboard.nextInt();
-					y.setStockProduct(un);
 					
+					correct = false;
+					
+					while(!correct) {
+						try {
+							System.out.println("Please write its price: ");
+							double P = keyboard.nextDouble();
+							p.setPriceProduct(P);
+							correct = true;
+						}catch(InputMismatchException e) {
+							System.out.println("Error "+e);
+							System.out.println("The input should be a double");
+							keyboard.nextLine();
+						}
+					}
+					
+					correct = false;
+					
+					while(!correct) {
+						try {
+							System.out.println("How many units do you want to add? ");
+							int un = keyboard.nextInt();
+							p.setStockProduct(un);
+							correct = true;
+						}catch(InputMismatchException e) {
+							System.out.println("Error "+e);
+							System.out.println("The input should be an integer");
+							keyboard.nextLine();
+						}
+					}
 					break;		
 			}
-		
-		
 	}
 	
 	public static void manageDataDeleteProduct(ListProducts product) {
-		
+		boolean correct = false;
 		product.ShowListProducts();
-		System.out.println("Please write the identifier of the product you want to delete: ");
-		int id = keyboard.nextInt();
+		int id = 0;
+		while(!correct) {
+			try {
+				System.out.println("Please write the identifier of the product you want to delete: ");
+				id = keyboard.nextInt();
+				correct = true;
+			}catch(InputMismatchException e) {
+				System.out.println("Error "+e);
+				System.out.println("The input should be an integer");
+				keyboard.nextLine();
+			}
+			if(product.ProductIdentifierExists(id)==false) {
+				correct=false;
+				keyboard.nextLine();
+			}
+		}
 		
-		product.DeleteProduct(id);
-		System.out.println("The product "+id+" has been deleted");
+		
+		if(product.DeleteProduct(id) == true) {
+			System.out.println("The product "+id+" has been deleted");
+			System.out.println("This is our new list of poducts:");
+			product.ShowListProducts();
+		}else {
+			System.out.println("Product with identifier "+id+" doesn't exist in our files. It can't be deleted :(");
+		}
+		
 	}
 	
 	public static void manageDataAddComputerPack(ListProducts product) {
@@ -96,6 +199,43 @@ public class Main{
 	}
 	
 	public static void manageDataChangeStock(ListProducts product) {
+		boolean correct = false;
+		int id = 0;
+		product.ShowListProducts();
+		
+		while(!correct) {
+			try {
+				System.out.println("Please introduce the identifier of the product you want to edit");
+				id = keyboard.nextInt();
+				correct = true;
+			}catch(InputMismatchException e) {
+				System.out.println("Error "+e);
+				System.out.println("The input should be an integer ");
+				keyboard.nextLine();
+			}
+			
+			if(product.ProductIdentifierExists(id)==false) {
+				correct = false;
+				keyboard.nextLine();
+			}
+		}
+		
+		correct=false;
+		int change = 0;
+		while(!correct) {
+			try {
+				System.out.println("Introduce the number you want to add/substract of stock");
+				change = keyboard.nextInt();
+				correct=true;
+			}catch(InputMismatchException e) {
+				System.out.println("Error "+e);
+				System.out.println("The input should be an integer ");
+				keyboard.nextLine();
+			}
+		}
+		product.ChangeStockProduct(id, change);
+		
+		product.ShowStockProducts();
 		
 	}
 	
@@ -293,6 +433,7 @@ public class Main{
 		
 	//Find the objects of the 2 different products in the list which contains all products.
 	
+	
 	while(!found) {
 	System.out.println("n\n\tEnter the name of the first product:\t");
 	try {
@@ -385,27 +526,30 @@ public class Main{
 	
 	//=========================================================================================================
 
-
 	public static void main(String[] args) {
-	
-		ListProducts product = new ListProducts(20);
-		ListClient client = new ListClient(20);
-		ListOrders order = new ListOrders(20);
-		
+		//Load clients into the system.
+		ListClient client = new ListClient(100);
 		try {
-			SerializedFileOrder.OrderReadData("Order.txt");
-		}
-		catch(ClassNotFoundException e) {
-			System.out.println(e.toString());
+		ClientFileData.ClientReadData(client);
 		}
 		catch(IOException e) {
 			System.out.println(e.toString());
 		}
 		
-
+		//Load products into the system.
+		ListProducts product = new ListProducts(100);
+		try {
+			ProductFileData.ProductReadData(product);
+			}
+			catch(IOException e) {
+				System.out.println(e.toString());
+			}
+		
+		//Load orders into the system.
+		ListOrders order = new ListOrders(20);
+		
 		
 		int op;
-		
 		showMenus.showMenuStart();
 		op = keyboard.nextInt();
 		while(op!=3) {
@@ -422,7 +566,8 @@ public class Main{
 		op = keyboard.nextInt();
 		if(op==1) {
 			try {
-				SerializedFileOrder.storeData(order,"Order.txt");
+				ClientFileData.ClientStoreData(client,"Client.txt");
+				ProductFileData.ProductStoreData(product,"Product.txt");
 				}
 				catch(IOException e) {
 				}
@@ -430,4 +575,3 @@ public class Main{
 		}
 	}
 }
-

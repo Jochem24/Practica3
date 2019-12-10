@@ -6,3 +6,5 @@ public class ClientAlreadyExistsException extends Exception {
 		super("The ID is already registred in the system.");
 	}
 }
+
+

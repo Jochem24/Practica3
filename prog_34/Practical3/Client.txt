@@ -1,0 +1,7 @@
+[ID=1, Email=abc@gmail.com, PostalAddress=Street1]
+Client [ID=2, Email=def@gmail.com, PostalAddress=Street2]
+Client [ID=3, Email=ghi@gmail.com, PostalAddress=Street3]
+Client [ID=4, Email=jkl@gmail.com, PostalAddress=Street4]
+Client [ID=5, Email=mno@gmail.com, PostalAddress=Street5]
+Client [ID=6, Email=pqr@gmail.com, PostalAddress=Street6]
+
