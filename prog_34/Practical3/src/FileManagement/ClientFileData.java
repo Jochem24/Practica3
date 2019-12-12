@@ -46,7 +46,7 @@ public class ClientFileData {
 			writer.close();
 		}
 		catch(IOException e) {
-			System.out.println("Error occured during the processing of the file");
+			System.out.println("Error occured during the processing of the file.");
 		}
 	}
 }

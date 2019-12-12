@@ -231,12 +231,9 @@ public class ListProducts {
 	
 	public void removeStock(Product product) {
 		int position; int newStock;
-			for(int i=0; i<NumProducts; i++) {
-				position = SearchPositionProduct(product);
-				newStock = list[i].getStockProduct()-1;
-				list[i].setStockProduct(newStock);
-				list[position] = list[i];
-			}
+		position = SearchPositionProduct(product);
+		newStock = list[position-1].getStockProduct()-1;
+		list[position-1].setStockProduct(newStock);
 	}
 	
 	

@@ -11,7 +11,7 @@ public class WindowCheckOrders extends JFrame {
 	private JButton b2 = new JButton("Exit");
 	//private JLabel l1 = new Jlabel();
 	
-	public WindowCheckOrders(String title,Order[] Order) {
+	public WindowCheckOrders(String title) {
 		super(title);
 		Container myContainer=getContentPane();
 		myContainer.setLayout(new BorderLayout());
@@ -20,10 +20,9 @@ public class WindowCheckOrders extends JFrame {
 		buttonsPanel.add(b1);
 		buttonsPanel.add(b2);
 		
-		list.setListData(order);
-		list.setVisibleRowCount(5);
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		add(new JScrollPane(list));
+		//list.setListData(order);
+		//list.setVisibleRowCount(5);
+		//list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		myContainer.add(buttonsPanel, BorderLayout.SOUTH);
 		myContainer.add(list);

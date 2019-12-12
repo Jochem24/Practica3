@@ -287,7 +287,7 @@ public class Main{
 	}
 	
 	public static void manageDataDeleteClient(ListClient client, ListOrders order, ListProducts product) {
-		int clientID=0; Client c = null;
+		int clientID=0;
 		boolean error = false;
 		
 		while(!error) {
@@ -329,13 +329,13 @@ public class Main{
 		}
 	
 	//=========================================================================================================
-	
+	//Create a new order.
 	public static void manageDataAddOrder(ListOrders listOrders, ListClient client, ListProducts product) {
 		int clientID = 0; int num = 0; Product x = null;
 		boolean error = false;
 		
 		System.out.println("n\n\tEnter the clientID:\t");
-		while(!error && client.checkClient(clientID) == true) {
+		while(!error) {
 		try{
 			clientID = keyboard.nextInt();
 			error = true;
@@ -347,32 +347,34 @@ public class Main{
 		}
 		
 		System.out.println("n\n\tEnter the date:\t");
-		String date = keyboard.nextLine();
+		
+		String date = keyboard.next();
+		
 		Order order = new Order(clientID, date);
-
-		ListProducts shoppingList = new ListProducts(99);
+		ListProducts shoppingList = new ListProducts(20);
 		
 		System.out.println("\n\n Options:");
 		System.out.println("\t1.Add a product to the shoppinglist\t");
 		System.out.println("\t2.Complete the shoppinglist\t");
-		System.out.println("n\n\tEnter the clientID:\t");
 		
 		error = false;
 		while(!error) {
 		try{
-			clientID = keyboard.nextInt();
+			num = keyboard.nextInt();
 			error = true;
 		}
 		catch(java.util.InputMismatchException e) {
-			System.out.println("n\n\tPlease enter an integer");
+			System.out.println("n\n\tPlease enter 1 or 2");
 			keyboard.next();
 		}
 		}
 	
-		error = false;
+		
 		while(num!=2) {
+			error = false;
 			while(!error) {
 			try {
+				manageDataShowCatalogue(product);
 				System.out.println("n\n\tEnter the name of the product:\t");	
 				String nameProduct = keyboard.next();
 				x = product.SearchPosProduct(nameProduct);
@@ -416,14 +418,10 @@ public class Main{
 		}
 	}
 	
-	public static void manageDataProductsOrder(ListOrders order, ListProducts product, ListClient client) {
+	//Display all the product which are present in any order.
+	public static void manageDataProductsOrder(ListOrders order, ListProducts product, ListClient client){
 	String[] list = null;
-	try {
-		list = order.productsInOrder(product, client);	
-	}
-	catch(ClientNotFoundException e) {
-		System.out.println("The client does not exist");
-	}
+	list = order.productsInOrder(product, client);
 	System.out.println(list);
 	}
 	
@@ -470,7 +468,7 @@ public class Main{
 	
 	
 	//=========================================================================================================
-	public static void menuOwner(int op, ListProducts product, ListClient client, ListOrders order) {
+	public static void menuOwner(int op, ListProducts product, ListClient client, ListOrders order){
 		showMenus.showMenuOwner();
 		op = keyboard.nextInt();
 		while (op!=4) {
@@ -572,8 +570,7 @@ public class Main{
 				ClientFileData.ClientStoreData(client);
 				ProductFileData.ProductStoreData(product);
 			}
-			catch(IOException e) {
-				
+			catch(IOException e) {	
 			}
 			System.out.println("\n\tChanges saved succesfully");
 		}

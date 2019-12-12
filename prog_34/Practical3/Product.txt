@@ -5,5 +5,5 @@
 5*AMD2*400.0*28*GPU
 6*Intel3*310.8*14*Peripheral
 7*Windows10*50.0*100*Windows
-8*OS X*80.99*56*Apple
+8*OSX*80.99*56*Apple
 9*Linux*10.0*46*Linux

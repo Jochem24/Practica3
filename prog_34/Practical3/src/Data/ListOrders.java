@@ -139,12 +139,17 @@ public class ListOrders implements Serializable{
 	 * @return
 	 */
 	
-	public String[] productsInOrder(ListProducts listProducts, ListClient listClient) throws ClientNotFoundException {
-		Client client;
+	public String[] productsInOrder(ListProducts listProducts, ListClient listClient){
+		int x =0; Client client = null;
 		int j=0;
 		String[] list = new String[20];
 		for(int i=0; i<numOfOrders; i++) {
-			client = listClient.searchClient(listOfOrders[i].getClientID());
+			try {
+			x = listOfOrders[i].getClientID();	
+			client = listClient.searchClient(x);
+			}
+			catch(ClientNotFoundException e) {
+			}
 			list[j] = listOfOrders[i].getListProducts().toString() + client.toString();
 			j++;
 		}
