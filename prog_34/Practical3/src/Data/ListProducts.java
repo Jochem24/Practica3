@@ -111,7 +111,7 @@ public class ListProducts {
 		return x;
 	}
 	
-	public Product SearchProduct(String p) {
+	public Product SearchProduct(String p) throws ProductNotFoundException {
 		int i=0;
 		boolean found=false;
 		Product x=null;
@@ -128,7 +128,7 @@ public class ListProducts {
 		return x;
 	}
 	
-	public Product SearchPosProduct(String p) {
+	public Product SearchPosProduct(String p) throws ProductNotFoundException {
 		int i=0;
 		boolean found=false;
 		Product x=null;

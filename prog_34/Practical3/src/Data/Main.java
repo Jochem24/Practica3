@@ -528,7 +528,10 @@ public class Main{
 
 	public static void main(String[] args) {
 		//Load clients into the system.
+		
 		ListClient client = new ListClient(100);
+		
+		
 		try {
 		ClientFileData.ClientReadData(client);
 		}
@@ -566,11 +569,12 @@ public class Main{
 		op = keyboard.nextInt();
 		if(op==1) {
 			try {
-				ClientFileData.ClientStoreData(client,"Client.txt");
-				ProductFileData.ProductStoreData(product,"Product.txt");
-				}
-				catch(IOException e) {
-				}
+				ClientFileData.ClientStoreData(client);
+				ProductFileData.ProductStoreData(product);
+			}
+			catch(IOException e) {
+				
+			}
 			System.out.println("\n\tChanges saved succesfully");
 		}
 	}

@@ -35,23 +35,15 @@ public class ClientFileData {
 		f.close();
 	}
 	
-	public static void ClientStoreData(ListClient list, String filename) throws IOException {
+	public static void ClientStoreData(ListClient list) throws IOException {
+		Client client;
 		try {
-			BufferedReader f = new BufferedReader(new FileReader(filename));
-			BufferedWriter g = new BufferedWriter(new FileWriter(filename));
-			String sentence = "";
-			
-			sentence = f.readLine();
-			while(sentence!=null) {
-				g.write(sentence);
-				g.newLine();
-				sentence = f.readLine();
-			}
-			f.close();
-			g.close();
-		}
-		catch(FileNotFoundException e) {
-			System.out.println("Error, the file does not exist");
+			BufferedWriter writer = new BufferedWriter(new FileWriter("Client.txt"));
+				for(int i=0; i<list.getNumOfClients(); i++) {
+					client = list.getListClient()[i];
+					writer.write(client.getID() + "*" + client.getEmail() + "*" + client.getPostalAddress() + "\n");
+				}
+			writer.close();
 		}
 		catch(IOException e) {
 			System.out.println("Error occured during the processing of the file");

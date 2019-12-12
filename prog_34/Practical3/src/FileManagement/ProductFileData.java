@@ -3,7 +3,6 @@ package FileManagement;
 import java.io.*;
 import java.util.*;
 
-import Exceptions.*;
 import Data.*;
 
 public class ProductFileData {
@@ -14,10 +13,10 @@ public class ProductFileData {
 		sentence = f.readLine();
 		while(sentence!=null) {
 			StringTokenizer st = new StringTokenizer(sentence,"*");
+			int identifier = Integer.parseInt(st.nextToken());
 			String name=st.nextToken();
 			double price = Double.parseDouble(st.nextToken());
 			int stock = Integer.parseInt(st.nextToken());
-			int identifier = Integer.parseInt(st.nextToken());
 			String test = st.nextToken();
 			if(test.equals("Windows")|| test.equals("Apple")||test.equals("Linux")) {
 				String OS = test;
@@ -36,20 +35,20 @@ public class ProductFileData {
 		f.close();
 	}
 	
-	public static void ProductStoreData(ListProducts list, String filename) throws IOException {
+	public static void ProductStoreData(ListProducts list){
+		Product product; Hardware hardware; Software software;
 		try {
-			BufferedReader f = new BufferedReader(new FileReader(filename));
-			BufferedWriter g = new BufferedWriter(new FileWriter(filename));
-			String sentence = "";
-			
-			sentence = f.readLine();
-			while(sentence!=null) {
-				g.write(sentence);
-				g.newLine();
-				sentence = f.readLine();
-			}
-			f.close();
-			g.close();
+			BufferedWriter writer = new BufferedWriter(new FileWriter("Product.txt"));
+
+			for(int i=0; i<list.getNumProducts(); i++) {
+				product = list.getList()[i];
+				if(product instanceof Hardware) {
+					writer.write(product.getIdentifier() +"*"+ product.getNameProduct() +"*"+ product.getPriceProduct() +"*"+ product.getStockProduct() +"*"+ ((Hardware) product).getType() +"\n");
+				}
+				else//if(product instanceof Software) {
+					writer.write(product.getIdentifier() +"*"+ product.getNameProduct() +"*"+ product.getPriceProduct() +"*"+ product.getStockProduct() +"*"+ ((Software) product).getNameOS() +"\n");	
+				}	
+			writer.close();
 		}
 		catch(FileNotFoundException e) {
 			System.out.println("Error, the file does not exist");
