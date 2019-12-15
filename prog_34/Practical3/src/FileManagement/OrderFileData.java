@@ -3,48 +3,77 @@ package FileManagement;
 import java.io.*;
 import java.util.Scanner;
 
-import Data.ListOrders;
-import Data.ListProducts;
-import Data.Order;
+import Exceptions.*;
 
+import Data.*;
 
 public class OrderFileData {
 
-	public void OrderReadData() {
-
-	int clientID; String orderID; ListProducts listProducts; double totalPrice; String date;
+	public static void OrderReadData() throws IOException{
+		int clientID; String orderID;double totalPrice; String date;
+		ListProducts listProducts; int size;
 	
-	ObjectInputStream inputFile;
-	ListOrders newList = new ListOrders(20);
+		ObjectInputStream inputFile;
 	
-	try {
-		inputFile = new ObjectInputStream(new FileInputStream("Orders.txt"));
-		for(int i=0; i<list.getNumOfOrders(); i++) {
-			list.getListOrders()[i] = (Order)inputFile.readObject();
-		}
+		ListOrders list = new ListOrders(20);
+		try {
+			inputFile = new ObjectInputStream(new FileInputStream("Order.ser"));
+		
+			Order order = (Order)inputFile.readObject();
+			clientID = order.getClientID();
+			orderID = order.getOrderID();
+			totalPrice = order.getTotalPrice();
+			date = order.getDate();
+			
+			Order newOrder = new Order(clientID,date);
+			try {
+				list.addOrder(newOrder);
+			}
+			catch(OrderListFullException e) {
+			}
 		inputFile.close();
-	}
-	catch(IOException e) {
+		}
+		catch(IOException e) {
 		System.out.println("Error with the output file");
-	}
-	catch(ClassNotFoundException e) {
+		}
+		catch(ClassNotFoundException e) {
 		System.out.println("Error, the file format is not correct."+e);
-	}
-	catch(ClassCastException e) {
-		System.out.println("Error, the file format is not correct for the current class Order definition"+e);	
-	}
+		}
 	}
 	
+	public static void OrderStoreData(ListOrders list) throws IOException {
+		ObjectOutputStream fout;
+
+		try{
+			fout=new ObjectOutputStream(new FileOutputStream("Order.ser"));
+			for(int i=0; i<list.getNumOfOrders(); i++) {
+				Order x = list.getListOrders()[i];
+				fout.writeObject(x);
+				}
+			fout.close();
+		}
+		catch(IOException e) {
+		}
+	}
 	
 	
+	public static void OrderReadData(ListOrders listOrders, String filename) throws IOException  {
+		Product product;
+		Order order;
+		String writeLine = "";
+		try ( ObjectOutputStream outputFile = new ObjectOutputStream(new FileOutputStream(filename))){
+			outputFile.writeObject("OrderList");
+			for(int i=0; i<listOrders.getNumOfOrders(); i++) {
+				order = listOrders.getListOrders()[i];
+				writeLine += order.getClientID() + "*" + order.getOrderID() + "*" + order.getListProducts() + "*" + order.getTotalPrice() + "*" + order.getDate();
+				outputFile.writeObject(writeLine + "\n");
+				writeLine = "";
+			}
+			outputFile.close();
+		}
+	}
 	
-	
-	
-	
-	
-	
-	
-	
+	/*
 	
 	
 	public void OrderReadData(File nameF) {
@@ -135,4 +164,5 @@ public class OrderFileData {
 			text.setText("Error with files");
 		}
 	}
+	*/
 }

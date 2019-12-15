@@ -45,7 +45,7 @@ public class ProductFileData {
 				if(product instanceof Hardware) {
 					writer.write(product.getIdentifier() +"*"+ product.getNameProduct() +"*"+ product.getPriceProduct() +"*"+ product.getStockProduct() +"*"+ ((Hardware) product).getType() +"\n");
 				}
-				else//if(product instanceof Software) {
+				else
 					writer.write(product.getIdentifier() +"*"+ product.getNameProduct() +"*"+ product.getPriceProduct() +"*"+ product.getStockProduct() +"*"+ ((Software) product).getNameOS() +"\n");	
 				}	
 			writer.close();

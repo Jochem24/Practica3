@@ -102,17 +102,20 @@ public class ListClient {
 	 * @return
 	 */
 	public Client searchClient(int ID) throws ClientNotFoundException {
+		boolean found = false; 
 		int j=0;
-		boolean found = false;
 		for(int i=0; i<numOfClients && !found; i++) {
 			if(list[i].getID() == ID) {
 				found = true;
 				j=i;
 			}
 		}
-		if(j==0) {
-			throw new ClientNotFoundException();
+		Client client = list[j].copy();
+		if(client != null) {
+			return(client);
 		}
-		return(list[j].copy());
+		else
+			throw new ClientNotFoundException();
 	}
 }
+	

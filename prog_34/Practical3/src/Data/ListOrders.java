@@ -164,21 +164,18 @@ public class ListOrders implements Serializable{
 	 */
 	public String amountProductInOrderList(Product product1, Product product2) {
 		String result = null;
-		int counter = 0;
+		int counterProduct1 = 0; 
+		int counterProduct2 = 0;
 		for(int i=0; i<numOfOrders; i++) {
-			if(listOfOrders[i].getListProducts().amountProductInList(product1) > listOfOrders[i].getListProducts().amountProductInList(product1)) {
-				result = product1.toString();
-				counter = listOfOrders[i].getListProducts().amountProductInList(product1);
-			}
+			counterProduct1 += listOfOrders[i].getListProducts().amountProductInList(product1); 
+			counterProduct2 += listOfOrders[i].getListProducts().amountProductInList(product2);
 		}
-		
-		for(int i=0; i<numOfOrders; i++) {
-			if(listOfOrders[i].getListProducts().amountProductInList(product1) < listOfOrders[i].getListProducts().amountProductInList(product1)) {
-				result = product2.toString();
-				counter = listOfOrders[i].getListProducts().amountProductInList(product2);
-			}	
+		if(counterProduct1>counterProduct2) {
+			result = product1.getNameProduct()+", Amount of times ordered: " + counterProduct1;
 		}
-	return(result + counter);
+		else 
+			result = product2.getNameProduct()+", Amount of times ordered: " + counterProduct2;
+		return(result);
 	}
 
 	@Override

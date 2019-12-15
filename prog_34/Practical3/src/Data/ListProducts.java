@@ -1,7 +1,11 @@
 package Data;
+import java.io.Serializable;
+
 import Exceptions.*;
 
-public class ListProducts {
+public class ListProducts implements Serializable {
+	static final long serialVersionIUD = 1;
+	
 	private int NumProducts;
 	private Product[] list;
 	
@@ -66,6 +70,15 @@ public class ListProducts {
 			NumProducts++;
 		}
 		return found;
+	}
+	
+	
+	public void addProductOrder(Product p) throws ProductListFullException {
+		if(NumProducts<list.length) {
+			list[NumProducts] = p;
+			NumProducts++;
+		}
+		else throw new ProductListFullException();
 	}
 	
 	public boolean DeleteProduct(int id) {
