@@ -184,7 +184,9 @@ public class ListOrders implements Serializable{
 		String result = "";
 		
 		for(i=0;i<numOfOrders;i++) {
+			if(listOfOrders[i]!=null){
 			result = result + listOfOrders[i].toString();
+		}
 		}
 		return result;
 	}
