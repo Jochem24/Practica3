@@ -188,6 +188,5 @@ public class ListOrders implements Serializable{
 		}
 		return result;
 	}
-	
-	
+
 }
