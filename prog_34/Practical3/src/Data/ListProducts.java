@@ -36,8 +36,9 @@ public class ListProducts implements Serializable {
 		String result = "";
 		
 		for(i=0;i<NumProducts;i++) {
+			if(list[i]!=null) {
 			result = result + list[i].toString() +"\n";
-		}
+		}}
 		return result;
 	}
 
@@ -58,10 +59,11 @@ public class ListProducts implements Serializable {
 		boolean found = false;	
 		int i,j=0;
 		for(i=0;i<NumProducts && !found;i++) {
+			if(list[i]!=null) {
 			if(list[i].nameProduct.equals(p.nameProduct)) {
 				found = true;
 			}
-		}
+		}}
 
 		if(NumProducts<list.length && !found) {
 			list[NumProducts] = p;
@@ -107,16 +109,70 @@ public class ListProducts implements Serializable {
 		
 	}
 	
+	/**The following method shows all Hardware Type by Display from a List
+	 * Author: Daniel Arias Cámara
+	 * @param List
+	 */
+	public void ShowProductsHardware () {
+		
+		for(int i=0; i<list.length; i++) {
+			if(list[i] instanceof Hardware) {
+				System.out.println(list[i].toString());
+			}
+		}
+	}
+	
+	
+	/**The following method shows all Software Type by Display from a List
+	 * Author: Daniel Arias Cámara
+	 * @param List
+	 */
+	public void ShowProductsSoftware () {
+		
+		for(int i=0; i<list.length; i++) {
+			if(list[i] instanceof Software) {
+				System.out.println(list[i].toString());
+			}
+		}
+	}
+	
+	
+	/**The following method shows all Computer Configuration Type by Display from a List
+	 * Author: Daniel Arias Cámara
+	 * @param List
+	 */
+	public void ShowProductsComputerConfiguration () {
+		
+		for(int i=0; i<list.length; i++) {
+			if(list[i] instanceof ComputerConfiguration) {
+				System.out.println(list[i].toString());
+			}
+		}
+	}
+	
+	/**The following method shows all the Products inside a Computer Configuration by Display
+	 * Author: Daniel Arias Cámara
+	 * @param configuration
+	 */
+	public void ShowProductsIntoComputerConfiguration(ComputerConfiguration configuration) {
+		Product []ListProducts = configuration.getComputerConfiguration();
+		for(int i=0; i<configuration.getNumProducts(); i++) {
+				System.out.println(ListProducts[i].toString());
+		}
+		
+	}
+	
 	public Product SearchProduct(Product p) {
 		int i=0;
 		boolean found=false;
 		Product x=null;
 		
 		for(i=0;i<NumProducts && !found;i++) {
+			if(list[i]!=null) {
 			if(list[i].equals(p)) {
 				x = list[i];
 			}
-		}
+		}}
 		if(!found) {
 			System.out.println("This Exercise is not stored in our files!");
 		}
@@ -130,10 +186,12 @@ public class ListProducts implements Serializable {
 		Product x=null;
 		
 		for(i=0;i<NumProducts && !found;i++) {
+			if(list[i]!=null) {
 			if(list[i].getNameProduct().equals(p)) {
+				found=true;
 				x = list[i];
 			}
-		}
+		}}
 		if(!found) {
 			System.out.println("This Exercise is not stored in our files!");
 		}
@@ -147,10 +205,11 @@ public class ListProducts implements Serializable {
 		Product x=null;
 		
 		for(i=0;i<NumProducts && !found;i++) {
+			if(list[i]!=null) {
 			if(list[i].getNameProduct().equals(p)) {
 				x = list[i];
 			}
-		}
+		}}
 		
 		return x;
 	}
@@ -160,10 +219,11 @@ public class ListProducts implements Serializable {
 		Product[] prod= new Product[10];
 		
 		for(i=0;i<NumProducts;i++) {
+			if(list[i]!=null) {
 				if (list[i].nameProduct==s) {
 					prod[j]=list[i].copy();
 					}	
-			}
+			}}
 		return prod;
 	}
 	
@@ -173,11 +233,12 @@ public class ListProducts implements Serializable {
 		Product[] prod = new Product[NumProducts];
 		
 		for (i=0;i<NumProducts;i++) {
+			if(list[i]!=null) {
 			if ((list[i].stockProduct) >= 1) {
 				prod[j] = list[i].copy();
 				j++;
 			}
-		}
+		}}
 		
 		return prod;
 	}
@@ -260,14 +321,33 @@ public class ListProducts implements Serializable {
 		}
 	}
 	
+	public boolean EqualNameProducts (String a) {
+		boolean equal = false;
+		int i=0;
+	
+		while(i<NumProducts && !equal) {
+			//The strings are equal when .compareTo("String") == 0
+			if(list[i].getNameProduct().compareTo(a)==0) {
+				equal = true;
+			}
+			i++;
+		}
+		
+		return equal;
+	}
 	
 	public int amountProductInList(Product product) {
 		int counter = 0;
 		for(int i=0; i<NumProducts; i++) {
+			if(list[i]!=null) {
 			if(list[i].getIdentifier() == product.getIdentifier()) {
 				counter++;
 			}
-		}
+		}}
 		return(counter);
 	}
 }
+
+
+
+
