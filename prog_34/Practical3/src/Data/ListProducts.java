@@ -218,17 +218,17 @@ public class ListProducts implements Serializable {
 	
 	public Product[] SearchNameProduct(String s) {
 		int i=0, j=0;
-		Product[] prod= new Product[10];
+		Product[] prod= new Product[50];
 		
 		for(i=0;i<NumProducts;i++) {
 			if(list[i]!=null) {
-				if (list[i].nameProduct==s) {
-					prod[j]=list[i].copy();
+				if (list[i].nameProduct.contains(s)) {
+					prod[j]=list[i];
+					j++;
 					}	
 			}}
 		return prod;
 	}
-	
 	
 	public Product[] ShowProductsInStock() {
 		int i=0, j=0;
