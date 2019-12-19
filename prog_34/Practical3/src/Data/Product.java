@@ -1,7 +1,9 @@
 package Data;
+import java.io.*;
 
-public abstract class Product {
-
+public abstract class Product implements Serializable {
+	static final long serialVersionIUD = 1;
+	
 	protected String nameProduct;
 	protected double priceProduct;
 	protected int stockProduct;

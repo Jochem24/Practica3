@@ -546,7 +546,7 @@ public class Main{
 		//Load orders into the system.
 		ListOrders order = new ListOrders(20);
 		try {
-		OrderFileData.OrderReadData();
+		OrderFileData.OrderReadData(order);
 		}
 		catch(IOException e) {
 			System.out.println(e.toString());

@@ -154,6 +154,7 @@ public class ListProducts implements Serializable {
 	 * Author: Daniel Arias Cámara
 	 * @param configuration
 	 */
+	/*
 	public void ShowProductsIntoComputerConfiguration(ComputerConfiguration configuration) {
 		Product []ListProducts = configuration.getComputerConfiguration();
 		for(int i=0; i<configuration.getNumProducts(); i++) {
@@ -161,6 +162,7 @@ public class ListProducts implements Serializable {
 		}
 		
 	}
+	*/
 	
 	public Product SearchProduct(Product p) {
 		int i=0;

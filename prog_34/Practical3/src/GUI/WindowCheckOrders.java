@@ -4,12 +4,11 @@ import java.awt.*;
 import javax.swing.*;
 import Data.*;
 
-public class WindowCheckOrders extends JFrame {
+public class WindowCheckOrders extends JFrame{
 	private JPanel buttonsPanel = new JPanel();
-	private JList list = new JList();
 	private JButton b1 = new JButton("Delete order");
 	private JButton b2 = new JButton("Exit");
-	//private JLabel l1 = new Jlabel();
+
 	
 	public WindowCheckOrders(String title) {
 		super(title);
@@ -22,7 +21,6 @@ public class WindowCheckOrders extends JFrame {
 		buttonsPanel.add(b2);
 		
 		myContainer.add(buttonsPanel, BorderLayout.SOUTH);
-		myContainer.add(list);
 		setVisible(true);
 		
 		String answer;
