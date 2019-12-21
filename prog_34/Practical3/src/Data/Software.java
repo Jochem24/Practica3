@@ -1,8 +1,5 @@
 package Data;
-import java.io.*;
-
-public class Software extends Product implements Serializable{
-	static final long serialVersionIUD = 1;
+public class Software extends Product{
 	
 	private String NameOS;
 	//private int identifier;
@@ -50,7 +47,7 @@ public class Software extends Product implements Serializable{
 
 	@Override
 	public String toString() {
-		return ("[Software " +super.toString()+" NameOS=" + NameOS + "]\n");
+		return (super.toString()+"\tOperatin System: " + NameOS + "\n");
 	}
 
 	

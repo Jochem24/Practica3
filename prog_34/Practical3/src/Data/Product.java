@@ -1,9 +1,7 @@
 package Data;
-import java.io.*;
 
-public abstract class Product implements Serializable {
-	static final long serialVersionIUD = 1;
-	
+public abstract class Product {
+
 	protected String nameProduct;
 	protected double priceProduct;
 	protected int stockProduct;
@@ -63,10 +61,9 @@ public abstract class Product implements Serializable {
 	@Override
 	public String toString() {
 
-		return identifier +" nameProduct=" + nameProduct + ", priceProduct=" + priceProduct + ", stockProduct="
-				+ stockProduct +"," ;
+		return "Identifier: " + identifier +"\tName: " + nameProduct + "\tPrice: " + priceProduct + "\tStock: "
+				+ stockProduct;
 
-		
 	}
 
 	

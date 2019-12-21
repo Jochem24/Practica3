@@ -33,4 +33,3 @@ public class WindowCheckOrders extends JFrame{
 		
 }
 	
-

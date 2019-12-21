@@ -1,8 +1,6 @@
 package Data;
-import java.io.*;
-
-public class Hardware extends Product implements Serializable{
-	static final long serialVersionIUD = 1;
+public class Hardware extends Product{
+	
 	private HardwareType Type;
 	
 	
@@ -46,7 +44,7 @@ public class Hardware extends Product implements Serializable{
 
 	@Override
 	public String toString() {
-		return ("[Hardware " +super.toString()+" Type = "+ Type+"]\n");
+		return (super.toString()+"\tType: "+ Type+"\n");
 	}
 	
 	@Override

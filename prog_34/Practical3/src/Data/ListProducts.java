@@ -3,9 +3,11 @@ import java.io.Serializable;
 
 import Exceptions.*;
 
-public class ListProducts implements Serializable {
-	static final long serialVersionIUD = 1;
-	
+public class ListProducts implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int NumProducts;
 	private Product[] list;
 	
@@ -36,9 +38,8 @@ public class ListProducts implements Serializable {
 		String result = "";
 		
 		for(i=0;i<NumProducts;i++) {
-			if(list[i]!=null) {
 			result = result + list[i].toString() +"\n";
-		}}
+		}
 		return result;
 	}
 
@@ -59,11 +60,10 @@ public class ListProducts implements Serializable {
 		boolean found = false;	
 		int i,j=0;
 		for(i=0;i<NumProducts && !found;i++) {
-			if(list[i]!=null) {
 			if(list[i].nameProduct.equals(p.nameProduct)) {
 				found = true;
 			}
-		}}
+		}
 
 		if(NumProducts<list.length && !found) {
 			list[NumProducts] = p;
@@ -73,7 +73,6 @@ public class ListProducts implements Serializable {
 		}
 		return found;
 	}
-	
 	
 	public void addProductOrder(Product p) throws ProductListFullException {
 		if(NumProducts<list.length) {
@@ -85,14 +84,11 @@ public class ListProducts implements Serializable {
 	
 	public boolean DeleteProduct(int id) {
 		boolean succesfull=false;
-		
-		
+	
 			if(list[id-1]!=null) {
 				list[id-1]=null;
 				succesfull = true;
 				}
-		
-		
 			
 		return succesfull;		
 	}
@@ -154,7 +150,6 @@ public class ListProducts implements Serializable {
 	 * Author: Daniel Arias Cámara
 	 * @param configuration
 	 */
-	/*
 	public void ShowProductsIntoComputerConfiguration(ComputerConfiguration configuration) {
 		Product []ListProducts = configuration.getComputerConfiguration();
 		for(int i=0; i<configuration.getNumProducts(); i++) {
@@ -162,7 +157,6 @@ public class ListProducts implements Serializable {
 		}
 		
 	}
-	*/
 	
 	public Product SearchProduct(Product p) {
 		int i=0;
@@ -170,11 +164,10 @@ public class ListProducts implements Serializable {
 		Product x=null;
 		
 		for(i=0;i<NumProducts && !found;i++) {
-			if(list[i]!=null) {
 			if(list[i].equals(p)) {
 				x = list[i];
 			}
-		}}
+		}
 		if(!found) {
 			System.out.println("This Exercise is not stored in our files!");
 		}
@@ -188,12 +181,10 @@ public class ListProducts implements Serializable {
 		Product x=null;
 		
 		for(i=0;i<NumProducts && !found;i++) {
-			if(list[i]!=null) {
 			if(list[i].getNameProduct().equals(p)) {
-				found=true;
 				x = list[i];
 			}
-		}}
+		}
 		if(!found) {
 			System.out.println("This Exercise is not stored in our files!");
 		}
@@ -201,48 +192,60 @@ public class ListProducts implements Serializable {
 		return x;
 	}
 	
-	public Product SearchPosProduct(String p) throws ProductNotFoundException {
+	public Product SearchPosProduct(String p) throws ProductNotFoundException{
 		int i=0;
 		boolean found=false;
 		Product x=null;
 		
 		for(i=0;i<NumProducts && !found;i++) {
-			if(list[i]!=null) {
 			if(list[i].getNameProduct().equals(p)) {
 				x = list[i];
 			}
-		}}
+		}
 		
 		return x;
 	}
 	
 	public Product[] SearchNameProduct(String s) {
 		int i=0, j=0;
-		Product[] prod= new Product[50];
+		Product[] prod= new Product[10];
 		
 		for(i=0;i<NumProducts;i++) {
-			if(list[i]!=null) {
-				if (list[i].nameProduct.contains(s)) {
-					prod[j]=list[i];
-					j++;
+				if (list[i].nameProduct==s) {
+					prod[j]=list[i].copy();
 					}	
-			}}
+			}
 		return prod;
 	}
+	
 	
 	public Product[] ShowProductsInStock() {
 		int i=0, j=0;
 		Product[] prod = new Product[NumProducts];
 		
 		for (i=0;i<NumProducts;i++) {
-			if(list[i]!=null) {
 			if ((list[i].stockProduct) >= 1) {
 				prod[j] = list[i].copy();
 				j++;
 			}
-		}}
+		}
 		
 		return prod;
+	}
+	
+	public boolean EqualNameProducts (String a) {
+		boolean equal = false;
+		int i=0;
+	
+		while(i<NumProducts && !equal) {
+			//The strings are equal when .compareTo("String") == 0
+			if(list[i].getNameProduct().compareTo(a)==0) {
+				equal = true;
+			}
+			i++;
+		}
+		
+		return equal;
 	}
 	
 	public boolean ProductIdentifierExists(int id) {
@@ -253,8 +256,8 @@ public class ListProducts implements Serializable {
 				found = false;
 			}
 		}catch(ArrayIndexOutOfBoundsException e) {
-			System.out.println("Error "+e);
-			System.out.println("This identifier is out of the bounds in our list");
+		//	System.out.println("Error "+e);
+		//	System.out.println("This identifier is out of the bounds in our list");
 			found = false;
 		}
 		return found;
@@ -307,9 +310,12 @@ public class ListProducts implements Serializable {
 	
 	public void removeStock(Product product) {
 		int position; int newStock;
-		position = SearchPositionProduct(product);
-		newStock = list[position-1].getStockProduct()-1;
-		list[position-1].setStockProduct(newStock);
+			for(int i=0; i<NumProducts; i++) {
+				position = SearchPositionProduct(product);
+				newStock = list[i].getStockProduct()-1;
+				list[i].setStockProduct(newStock);
+				list[position] = list[i];
+			}
 	}
 	
 	
@@ -323,33 +329,14 @@ public class ListProducts implements Serializable {
 		}
 	}
 	
-	public boolean EqualNameProducts (String a) {
-		boolean equal = false;
-		int i=0;
-	
-		while(i<NumProducts && !equal) {
-			//The strings are equal when .compareTo("String") == 0
-			if(list[i].getNameProduct().compareTo(a)==0) {
-				equal = true;
-			}
-			i++;
-		}
-		
-		return equal;
-	}
 	
 	public int amountProductInList(Product product) {
 		int counter = 0;
 		for(int i=0; i<NumProducts; i++) {
-			if(list[i]!=null) {
 			if(list[i].getIdentifier() == product.getIdentifier()) {
 				counter++;
 			}
-		}}
+		}
 		return(counter);
 	}
 }
-
-
-
-

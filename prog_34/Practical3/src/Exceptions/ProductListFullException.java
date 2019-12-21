@@ -6,6 +6,4 @@ public class ProductListFullException extends Exception{
 			super("The product is not found");
 		}
 }
-			
-
-
+	

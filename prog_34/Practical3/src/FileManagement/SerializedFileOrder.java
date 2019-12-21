@@ -1,4 +1,3 @@
-
 package FileManagement;
 
 import java.io.*;
@@ -100,7 +99,6 @@ public class SerializedFileOrder {
 	/*
 	try {
 		for (int i=0; i<newList.getNumOfOrders(); i++) {
-
 	}
 	*/
 
@@ -125,5 +123,3 @@ public class SerializedFileOrder {
 		}
 	}
 }
-
-	
