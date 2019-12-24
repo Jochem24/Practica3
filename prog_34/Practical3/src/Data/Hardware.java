@@ -1,10 +1,10 @@
 package Data;
-public class Hardware extends Product{
-	
+
+import java.io.*;
+
+public class Hardware extends Product implements Serializable{
+	static final long serialVersionIUD = 1;
 	private HardwareType Type;
-	
-	
-	
 	
 
 	/**

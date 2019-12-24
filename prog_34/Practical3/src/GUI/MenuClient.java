@@ -4,7 +4,7 @@ import Data.ListClient;
 
 public class MenuClient{
 	
-	static ListClient client = new ListClient(20000);
+	static ListClient client = new ListClient(100);
 	
 	public static void main(String[] args) {
 		

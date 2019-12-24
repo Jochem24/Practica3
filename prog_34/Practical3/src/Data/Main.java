@@ -382,7 +382,7 @@ public class Main{
 		boolean error = false;
 		
 		while(!error) {
-		System.out.println("n\n\tEnter the ID of the client you want to delete:\t");
+		System.out.println("\n\n\tEnter the ID of the client you want to delete:\t");
 		try{
 			clientID = keyboard.nextInt();
 			error = true;
@@ -424,45 +424,8 @@ public class Main{
 	public static void manageDataAddOrder(ListOrders listOrders, ListClient client, ListProducts product) {
 		int clientID = 0; int num = 0; Product x = null;
 		boolean error = false;
-		boolean salir = false;
-		//We work with two files: 1.Original information	2.New Information
-		File originalFile = new File("OriginalOrderData.dat");
-		File newFile = new File("NewOrderData.dat");
 		
-		//There are problems to delete a folder, so that is why we deleted and create the 
-		//second one again. This way is always empty
-		if(newFile.exists()) newFile.delete();
-		try {
-			newFile.createNewFile();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		System.out.println("n\n\tEnter the clientID:\t");
-		while(!error && client.checkClient(clientID) == true) {
-		try{
-			clientID = keyboard.nextInt();
-			error = true;
-		}
-		catch(java.util.InputMismatchException e) {
-			System.out.println("n\n\tPlease enter an integer");
-			keyboard.next();
-		}
-		}
-		
-		System.out.println("n\n\tEnter the date:\t");
-		String date = keyboard.nextLine();
-		Order order = new Order(clientID, date);
-
-		ListProducts shoppingList = new ListProducts(99);
-		
-		System.out.println("\n\n Options:");
-		System.out.println("\t1.Add a product to the shoppinglist\t");
-		System.out.println("\t2.Complete the shoppinglist\t");
-		System.out.println("n\n\tEnter the clientID:\t");
-		
-		error = false;
+		System.out.println("\n\n\tEnter the clientID:\t");
 		while(!error) {
 		try{
 			clientID = keyboard.nextInt();
@@ -470,23 +433,46 @@ public class Main{
 		}
 		catch(java.util.InputMismatchException e) {
 			System.out.println("n\n\tPlease enter an integer");
-			keyboard.next();
+			keyboard.nextInt();
 		}
+		}
+		
+		System.out.println("\n\n\tEnter the date:\t");
+		String date = keyboard.next();
+		
+		Order order = new Order(clientID, date);
+		ListProducts shoppingList = new ListProducts(99);
+		
+		System.out.println("\n\n Options:");
+		System.out.println("\t1.Add a product to the shoppinglist\t");
+		System.out.println("\t2.Complete the shoppinglist\t");
+
+		error = false;
+		while(!error) {
+		try{
+			num = keyboard.nextInt();
+			error = true;
+			}
+		catch(java.util.InputMismatchException e) {
+			System.out.println("\n\n\tPlease enter an integer");
+			keyboard.next();
+			}
 		}
 	
 		error = false;
 		while(num!=2) {
 			while(!error) {
+			product.ShowListProducts();
 			try {
-				System.out.println("n\n\tEnter the name of the product:\t");	
+				System.out.println("\n\n\tEnter the name of the product:\t");	
 				String nameProduct = keyboard.next();
 				x = product.SearchPosProduct(nameProduct);
 				error= true;
-			}
+				}
 			catch(ProductNotFoundException e) {
 				System.out.println(e.toString());
-				keyboard.nextLine();
-			}
+				keyboard.next();
+				}
 			}
 			
 			product.removeStock(x);
@@ -503,8 +489,8 @@ public class Main{
 				error = true;
 			}
 			catch(java.util.InputMismatchException e) {
-				System.out.println("n\n\tPlease enter an integer");
-				keyboard.next();
+				System.out.println("\n\n\tPlease enter an integer");
+				keyboard.nextInt();
 			}
 			}
 		}
@@ -517,11 +503,11 @@ public class Main{
 			System.out.println("n\n\tThe order is added to the list\t");
 		}
 		catch(OrderListFullException e) {
-			System.out.println("n\n\tThe order list is full\t");
+			System.out.println("\n\n\tThe order list is full\t");
 		}
 	}
 	
-	public static void manageDataProductsOrder(ListOrders order, ListProducts product, ListClient client) throws ClientNotFoundException {
+	public static void manageDataProductsOrder(ListOrders order, ListProducts product, ListClient client){
 	String[] list = null;
 	list = order.productsInOrder(product, client);
 	System.out.println(list);
@@ -535,7 +521,7 @@ public class Main{
 	
 	
 	while(!found) {
-	System.out.println("n\n\tEnter the name of the first product:\t");
+	System.out.println("\n\n\tEnter the name of the first product:\t");
 	try {
 		String product1 = keyboard.next();
 		x = product.SearchProduct(product1); 
@@ -548,7 +534,7 @@ public class Main{
 	
 	found = false;
 	while(!found) {
-	System.out.println("n\n\tEnter the name of the second product:\t");
+	System.out.println("\n\n\tEnter the name of the second product:\t");
 	try {
 		String product2 = keyboard.next();
 		y = product.SearchProduct(product2);
@@ -560,7 +546,6 @@ public class Main{
 	}
 	System.out.println(order.amountProductInOrderList(x,y)); //Return the product which has more orders and show the amount.
 	}
-	
 	
 	public static void manageDataShowAllOrders(ListOrders order) {
 		for(int i=0;i<order.getNumOfOrders();i++) {	
@@ -607,12 +592,7 @@ public class Main{
 					while(op!=5) {
 						switch(op) {
 						case 1:	manageDataAddOrder(order, client, product); break;
-						case 2: try {
-								manageDataProductsOrder(order, product, client);
-							} catch (ClientNotFoundException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} break;
+						case 2: manageDataProductsOrder(order, product, client); break;
 						case 3: manageDataCompareOrdersProducts(order, product); break;
 						case 4: manageDataShowAllOrders(order); break;
 						}
@@ -634,21 +614,26 @@ public class Main{
 
 	public static void main(String[] args) {
 	
-		ListProducts product = new ListProducts(20000);
-		ListClient client = new ListClient(20000);
-		ListOrders order = new ListOrders(20000);
-		
-		try {
-			SerializedFileOrder.OrderReadData("Order.txt");
-		}
-		catch(ClassNotFoundException e) {
-			System.out.println(e.toString());
-		}
-		catch(IOException e) {
-			System.out.println(e.toString());
-		}
+		ListProducts product = new ListProducts(100);
+		ListClient client = new ListClient(100);
+		ListOrders order = new ListOrders(100);
 		
 
+		try {
+			ClientFileData.ClientReadData(client);
+		} catch(IOException e) {
+		}
+		
+		try {
+			ProductFileData.ProductReadData(product);
+		} catch(IOException e) {
+		}
+		
+		try {
+			OrderFileData.OrderReadData(order);
+		} catch(IOException e) {
+			System.out.println(e.toString());
+		}
 		
 		int op;
 		
@@ -668,7 +653,9 @@ public class Main{
 		op = keyboard.nextInt();
 		if(op==1) {
 			try {
-				SerializedFileOrder.storeData(order,"Order.txt");
+				ClientFileData.ClientStoreData(client);
+				ProductFileData.ProductStoreData(product);
+				OrderFileData.OrderStoreData(order);
 				ComputerConfigurationFileData.ComputerConfigurationStoreData(product);
 				}
 				catch(IOException e) {

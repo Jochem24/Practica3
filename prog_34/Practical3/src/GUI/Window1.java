@@ -93,7 +93,7 @@ public class Window1{
 					int identifier=0;
 					
 					if(e.getSource()==button_cancel) {
-						int answer = JOptionPane.showConfirmDialog(null, "¿Are you sure you want lo leave?", "CONFIRMATION", JOptionPane.YES_NO_OPTION);
+						int answer = JOptionPane.showConfirmDialog(null, "Are you sure you want lo leave?", "CONFIRMATION", JOptionPane.YES_NO_OPTION);
 					      if (answer == 0)
 					         System.exit(0);
 					}else {
