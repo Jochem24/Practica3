@@ -310,12 +310,9 @@ public class ListProducts implements Serializable{
 	
 	public void removeStock(Product product) {
 		int position; int newStock;
-			for(int i=0; i<NumProducts; i++) {
-				position = SearchPositionProduct(product);
-				newStock = list[i].getStockProduct()-1;
-				list[i].setStockProduct(newStock);
-				list[position] = list[i];
-			}
+			position = SearchPositionProduct(product);
+			newStock = list[position].getStockProduct()-1;
+			list[position].setStockProduct(newStock);
 	}
 	
 	

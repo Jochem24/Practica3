@@ -459,8 +459,8 @@ public class Main{
 			}
 		}
 	
-		error = false;
 		while(num!=2) {
+			error = false;
 			while(!error) {
 			product.ShowListProducts();
 			try {
@@ -475,23 +475,26 @@ public class Main{
 				}
 			}
 			
-			product.removeStock(x);
-			shoppingList.addProduct(x);
-
+			//product.removeStock(x);
+			try {
+			shoppingList.addProductOrder(x);
+			} catch(ProductListFullException e) {
+			}
+			
 			System.out.println("\n\n Options:");
-			System.out.println("\t1.Add a prodcut to the shoppinglist\t");
+			System.out.println("\t1.Add a product to the shoppinglist\t");
 			System.out.println("\t2.Complete the shoppinglist\t");
 			
 			error = false;
 			while(!error) {
-			try{
-				num = keyboard.nextInt();
-				error = true;
-			}
-			catch(java.util.InputMismatchException e) {
-				System.out.println("\n\n\tPlease enter an integer");
-				keyboard.nextInt();
-			}
+				try{
+					num = keyboard.nextInt();
+					error = true;
+				}
+				catch(java.util.InputMismatchException e) {
+					System.out.println("\n\n\tPlease enter an integer");
+					keyboard.nextInt();
+				}
 			}
 		}
 
@@ -500,7 +503,7 @@ public class Main{
 		
 		try {
 			listOrders.addOrder(order);
-			System.out.println("n\n\tThe order is added to the list\t");
+			System.out.println("\n\n\tThe order is added to the list\t");
 		}
 		catch(OrderListFullException e) {
 			System.out.println("\n\n\tThe order list is full\t");
@@ -518,7 +521,6 @@ public class Main{
 	boolean found = false;
 		
 	//Find the objects of the 2 different products in the list which contains all products.
-	
 	
 	while(!found) {
 	System.out.println("\n\n\tEnter the name of the first product:\t");
@@ -549,7 +551,7 @@ public class Main{
 	
 	public static void manageDataShowAllOrders(ListOrders order) {
 		for(int i=0;i<order.getNumOfOrders();i++) {	
-			System.out.println(order.toString());
+			System.out.println(order);
 		}
 	}
 	
@@ -657,9 +659,9 @@ public class Main{
 				ProductFileData.ProductStoreData(product);
 				OrderFileData.OrderStoreData(order);
 				ComputerConfigurationFileData.ComputerConfigurationStoreData(product);
-				}
-				catch(IOException e) {
-				}
+			}
+			catch(IOException e) {
+			}
 			System.out.println("\n\tChanges saved succesfully");
 		}
 	}

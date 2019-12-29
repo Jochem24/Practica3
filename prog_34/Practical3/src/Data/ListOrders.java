@@ -108,7 +108,23 @@ public class ListOrders implements Serializable{
 		return(list);	
 	}
 	
-	
+	/**
+	 * 
+	 * @param clientID
+	 * @return
+	 * @throws OrderListFullException
+	 */
+	public Order searchOrder(String orderID){
+		boolean found = false;
+		Order order = null;
+		for(int i=0;i<numOfOrders && !found;i++) {
+			if(listOfOrders[i].getOrderID() == orderID){
+				order = listOfOrders[i];
+				found = true;
+			}
+		}
+		return(order);	
+	}
 	/**
 	 * 
 	 * @param orderID

@@ -1,8 +1,9 @@
-1*Intel*179.99*6*CPU
-2*AMD*35.0*19*MB
-3*NVidea*400.0*2*RAM
-4*Intel2*245.5*-3*HDD
-5*AMD2*400.0*22*GPU
-1*Intel3*310.8*7*Peripheral
-8*OSX*80.99*44*Apple
-8*OSX*80.99*44*Apple
+1*Intel*179.99*0*CPU
+2*AMD*35.0*13*MB
+3*NVidea*400.0*25*RAM
+4*Intel2*245.5*12*HDD
+5*AMD2*400.0*28*GPU
+6*Intel3*310.8*14*Peripheral
+7*OSX*80.99*37*Apple
+8*Windows10*50.0*98*Windows
+9*Linux*10.0*41*Linux
