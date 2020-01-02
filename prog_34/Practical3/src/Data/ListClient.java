@@ -26,7 +26,11 @@ public class ListClient {
 	public Client[] getListClient() {
 		return list;
 	}
-	
+
+	public void setList(Client[] list) {
+		this.list = list;
+	}
+
 	/**
 	 * 
 	 * @return
@@ -52,13 +56,10 @@ public class ListClient {
 	 * Adding a new client to the list if the ID is unique.
 	 * @param client The object Client added to the list ListClient.
 	 */
-	public void addClient(Client client) throws ClientAlreadyExistsException, ClientListFullException {		
-		boolean found = false;	
-		for(int i=0;i<numOfClients && !found;i++) {
-			if(list[i].getID() == client.getID()) {
-				found = true;
-				throw new ClientAlreadyExistsException();
-			}
+	public void addClient(Client client) throws ClientListFullException, ClientAlreadyExistsException {		
+		boolean found = checkClient(client.getID());
+		if(found) {
+			throw new ClientAlreadyExistsException();
 		}
 		
 		if(numOfClients<list.length && !found) {

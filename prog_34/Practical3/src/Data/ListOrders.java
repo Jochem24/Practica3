@@ -57,7 +57,6 @@ public class ListOrders implements Serializable{
 	 * @param orderID The ID of the order to find the order in the list.
 	 * @param listProducts 
 	 */
-	//still have to change stock
 	public void deleteOrder(String orderID) throws OrderIDNotFoundException {
 		boolean found = false;
 		for(int i=0;i<numOfOrders && !found;i++) {
@@ -77,12 +76,9 @@ public class ListOrders implements Serializable{
 	 * @param catalogue
 	 */
 	
-	public void deleteAllOrders(int clientID){ //, ListProducts catalogue
-		//ListProducts shoppingList;
+	public void deleteAllOrders(int clientID){
 		for(int i=0;i<numOfOrders;i++) {
 			if(listOfOrders[i].getClientID() == clientID) {
-				//shoppingList = listOfOrders[i].getListProducts();
-				//catalogue.restoreStock(shoppingList);
 				listOfOrders[i] = null;
 			}
 		}	
